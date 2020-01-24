@@ -1,0 +1,74 @@
+Package lcompil;
+
+Helpers
+
+lettre = [['a' .. 'z'] + ['A' .. 'Z']];
+chiffre = ['0'..'9'];
+
+Tokens
+	number = ['0'..'9']+;
+	word = lettre+;
+	letter = lettre;
+	letter_min = ['a'..'z']+;
+	identificator = lettre + (lettre | chiffre)*;
+	or = '|';
+	and = '&';
+	plus ='+';
+	minus ='-';
+	mult ='*';
+	div ='/';
+	equals = '"';
+	inferior = '<';
+	no = '!';
+	l_par ='(';
+	r_par =')';
+	blank = (' ' | 13 | 10 | 9)*;
+	comma = ',';
+
+Ignored Tokens
+	blank;
+	
+Productions		
+	expr =
+		{ou} expr or expr_ou |
+		{simple} expr_ou;
+		
+	expr_ou =
+		{et} expr_ou and expr_et |
+		{simple} expr_et;
+		
+	expr_et =
+		{egal} expr_et equals expr_egal |
+		{inf} expr_et inferior expr_egal |
+		{simple} expr_egal;
+		
+	expr_egal =
+		{plus} expr_egal plus expr_plus |
+		{moins} expr_egal minus expr_plus |
+		{simple} expr_plus;
+		
+	expr_plus =
+		{multiplier} expr_plus mult expr_mult |
+		{diviser} expr_plus div expr_mult |
+		{simple} expr_mult;
+		
+	expr_mult =
+		{non} no expr_mult |
+		{simple} expr_no;
+		
+	expr_no =
+		{parentheses} l_par expr r_par |
+		{simple} expr_complete;
+		
+	expr_complete =
+		{fonction} identificator l_par list r_par |
+		{nombre} number |
+		{mot} letter;
+		
+	list =
+		{elementsmultiples} expr list_chainee |
+		{vide} ;
+		
+	list_chainee =
+		{elementsmultiples} comma expr list_chainee |
+		{vide} ;

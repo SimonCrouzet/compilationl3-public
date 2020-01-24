@@ -1,6 +1,6 @@
-import sc.parser.*;
-import sc.lexer.*;
-import sc.node.*;
+import lcompil.parser.*;
+import lcompil.lexer.*;
+import lcompil.node.*;
 import java.io.*;
 //import sa.*;
 //import ts.*;
