@@ -1,0 +1,28 @@
+<Start>
+ <ASimpleExpr>
+  <ASimpleExprOu>
+   <ASimpleExprEt>
+    <APlusExprEgal>
+     <ASimpleExprEgal>
+      <ASimpleExprPlus>
+       <ASimpleExprMult>
+        <ASimpleExprNo>
+         <ANombreExprComplete>
+         </ANombreExprComplete>
+        </ASimpleExprNo>
+       </ASimpleExprMult>
+      </ASimpleExprPlus>
+     </ASimpleExprEgal>
+     <ASimpleExprPlus>
+      <ASimpleExprMult>
+       <ASimpleExprNo>
+        <ANombreExprComplete>
+        </ANombreExprComplete>
+       </ASimpleExprNo>
+      </ASimpleExprMult>
+     </ASimpleExprPlus>
+    </APlusExprEgal>
+   </ASimpleExprEt>
+  </ASimpleExprOu>
+ </ASimpleExpr>
+</Start>
