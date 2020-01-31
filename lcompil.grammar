@@ -47,7 +47,7 @@ Ignored Tokens
 	
 Productions
 
-    programme =
+    program =
         {declarations} optdecvar listedecfonc |
         {liste_fonction} listedecfonc;
 
@@ -80,14 +80,14 @@ Productions
     instr =
         {instraffect} instraffect |
         {instrbloc } instrbloc |
-        {instrsi } instrsi |
-        {instrtantque } instrtantque |
+        {instrsi } instrif |
+        {instrtantque } instrwhile |
         {instrappel } instrappel |
-        {instrretour } instrretour |
-        {instrecriture } instrecriture |
-        {instrvide} instrvide ;
+        {instrretour } instrreturn |
+        {instrecriture } instrwrite |
+        {instrvide} instrvoid ;
 
-    instraffect = var equals expr semicolon ;
+    instraffect = expr_complete equals expr semicolon ;
 
     instrbloc = l_accolade listeinst r_accolade ;
 
@@ -95,21 +95,24 @@ Productions
         {linstrec} instr listeinst |
         {linstfinal} ;
 
-    instrsi =
-        {avecsinon} if expr then instrbloc instrsinon|
+    instrif =
+        {avecsinon} if expr then instrbloc instrelseif|
         {sanssinon} if expr then instrbloc ;
 
-    instrsinon = elseif instrbloc ;
+    instrelseif = elseif instrbloc ;
 
-    instrtantque = while expr do instrbloc ;
+    instrwhile = while expr do instrbloc ;
 
     instrappel = appelfct semicolon ;
 
-    instrretour = return expr semicolon ;
+    instrreturn = return expr semicolon ;
 
-    instrecriture = write l_par expr r_par semicolon ;
+    instrwrite = write l_par expr r_par semicolon ;
 
-    instrvide = semicolon ;
+    instrvoid = semicolon ;
+
+    appelfct =
+        {avecparam} identificator l_par list r_par ;
 
 
 
@@ -145,9 +148,15 @@ Productions
 		{simple} expr_complete;
 		
 	expr_complete =
-		{fonction} identificator l_par list r_par |
 		{nombre} number |
-		{mot} letter;
+		{var} var |
+		{lire} read l_par r_par |
+		{appelfct} appelfct;
+
+	var =
+	    {vartab} identificator l_crochet expr r_crochet |
+        {varsimple} identificator ;
+
 		
 	list =
 		{elementsmultiples} expr list_chainee |
