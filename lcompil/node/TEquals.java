@@ -9,12 +9,12 @@ public final class TEquals extends Token
 {
     public TEquals()
     {
-        super.setText("\"");
+        super.setText("=");
     }
 
     public TEquals(int line, int pos)
     {
-        super.setText("\"");
+        super.setText("=");
         setLine(line);
         setPos(pos);
     }

@@ -106,14 +106,98 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseTComma(@SuppressWarnings("unused") TComma node)
+    public void caseTLCrochet(@SuppressWarnings("unused") TLCrochet node)
     {
         this.index = 16;
     }
 
     @Override
-    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    public void caseTRCrochet(@SuppressWarnings("unused") TRCrochet node)
     {
         this.index = 17;
+    }
+
+    @Override
+    public void caseTLAccolade(@SuppressWarnings("unused") TLAccolade node)
+    {
+        this.index = 18;
+    }
+
+    @Override
+    public void caseTRAccolade(@SuppressWarnings("unused") TRAccolade node)
+    {
+        this.index = 19;
+    }
+
+    @Override
+    public void caseTIf(@SuppressWarnings("unused") TIf node)
+    {
+        this.index = 20;
+    }
+
+    @Override
+    public void caseTThen(@SuppressWarnings("unused") TThen node)
+    {
+        this.index = 21;
+    }
+
+    @Override
+    public void caseTElseif(@SuppressWarnings("unused") TElseif node)
+    {
+        this.index = 22;
+    }
+
+    @Override
+    public void caseTWhile(@SuppressWarnings("unused") TWhile node)
+    {
+        this.index = 23;
+    }
+
+    @Override
+    public void caseTDo(@SuppressWarnings("unused") TDo node)
+    {
+        this.index = 24;
+    }
+
+    @Override
+    public void caseTInt(@SuppressWarnings("unused") TInt node)
+    {
+        this.index = 25;
+    }
+
+    @Override
+    public void caseTReturn(@SuppressWarnings("unused") TReturn node)
+    {
+        this.index = 26;
+    }
+
+    @Override
+    public void caseTRead(@SuppressWarnings("unused") TRead node)
+    {
+        this.index = 27;
+    }
+
+    @Override
+    public void caseTWrite(@SuppressWarnings("unused") TWrite node)
+    {
+        this.index = 28;
+    }
+
+    @Override
+    public void caseTComma(@SuppressWarnings("unused") TComma node)
+    {
+        this.index = 29;
+    }
+
+    @Override
+    public void caseTSemicolon(@SuppressWarnings("unused") TSemicolon node)
+    {
+        this.index = 30;
+    }
+
+    @Override
+    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    {
+        this.index = 31;
     }
 }
