@@ -4,8 +4,8 @@ Helpers
 
 lettre = [['a' .. 'z'] + ['A' .. 'Z']];
 chiffre = ['0'..'9'];
-alpha = [lettre + ['_' + '$']]
-alphanum = [lettre + chiffre]
+alpha = [lettre + ['_' + '$']];
+alphanum = [lettre + chiffre];
 
 Tokens
 	number = chiffre+;
@@ -38,27 +38,27 @@ Tokens
 	read = 'lire';
 	write = 'ecrire';
 	blank = (' ' | 13 | 10 | 9)*;
+	comment = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 	comma = ',';
 	semicolon = ';';
 
 Ignored Tokens
-	blank;
+	blank, comment;
 	
 Productions
 
-    programme = optdecvar listedecfonc ;
     programme =
-        {decvarldecfonc} optdecvar listedecfonc |
-        {ldecfonc} listedecfonc;
+        {declarations} optdecvar listedecfonc |
+        {liste_fonction} listedecfonc;
 
     optdecvar = listedecvar semicolon;
 
     listedecvar =
-        {decvarldecvar} decvar listedecvarbis |
-        {decvar} decvar;
+        {declaration_variables_multiples} decvar listedecvar_chainee |
+        {declarer_variable} decvar;
 
-    listedecvarbis =
-        {decvarldecvar} comma decvar listedecvarbis|
+    listedecvar_chainee =
+        {decvarldecvar} comma decvar listedecvar_chainee |
         {decvar} comma decvar ;
 
     decvar =
@@ -91,8 +91,6 @@ Productions
 
     instrbloc = l_accolade listeinst r_accolade ;
 
-    //listeinst = instr*;
-
     listeinst =
         {linstrec} instr listeinst |
         {linstfinal} ;
@@ -113,9 +111,8 @@ Productions
 
     instrvide = semicolon ;
 
-###################
-Expressions
-###################
+
+
 	expr =
 		{ou} expr or expr_ou |
 		{simple} expr_ou;
