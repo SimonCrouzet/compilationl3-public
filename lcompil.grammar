@@ -4,31 +4,118 @@ Helpers
 
 lettre = [['a' .. 'z'] + ['A' .. 'Z']];
 chiffre = ['0'..'9'];
+alpha = [lettre + ['_' + '$']]
+alphanum = [lettre + chiffre]
 
 Tokens
-	number = ['0'..'9']+;
+	number = chiffre+;
 	word = lettre+;
 	letter = lettre;
 	letter_min = ['a'..'z']+;
-	identificator = lettre + (lettre | chiffre)*;
+	identificator = alpha alphanum*;
 	or = '|';
 	and = '&';
 	plus ='+';
 	minus ='-';
 	mult ='*';
 	div ='/';
-	equals = '"';
+	equals = '=';
 	inferior = '<';
 	no = '!';
 	l_par ='(';
 	r_par =')';
+	l_crochet = '[';
+	r_crochet = ']';
+	l_accolade = '{';
+	r_accolade = '}';
+	if = 'si';
+	then = 'alors';
+	elseif = 'sinon';
+	while = 'tantque';
+	do = 'faire';
+	int = 'entier';
+	return = 'retour';
+	read = 'lire';
+	write = 'ecrire';
 	blank = (' ' | 13 | 10 | 9)*;
 	comma = ',';
+	semicolon = ';';
 
 Ignored Tokens
 	blank;
 	
-Productions		
+Productions
+
+    programme = optdecvar listedecfonc ;
+    programme =
+        {decvarldecfonc} optdecvar listedecfonc |
+        {ldecfonc} listedecfonc;
+
+    optdecvar = listedecvar semicolon;
+
+    listedecvar =
+        {decvarldecvar} decvar listedecvarbis |
+        {decvar} decvar;
+
+    listedecvarbis =
+        {decvarldecvar} comma decvar listedecvarbis|
+        {decvar} comma decvar ;
+
+    decvar =
+        {decvarentier} int identificator |
+        {decvartableau} int identificator l_crochet number r_crochet ;
+
+    listedecfonc =
+        {ldecfoncrec} decfonc listedecfonc |
+        {ldecfoncfinal} ;
+
+    decfonc =
+        {decvarinstr} identificator listeparam optdecvar instrbloc |
+        {instr} identificator listeparam instrbloc ;
+
+    listeparam =
+        {sansparam} l_par r_par |
+        {avecparam} l_par listedecvar r_par ;
+
+    instr =
+        {instraffect} instraffect |
+        {instrbloc } instrbloc |
+        {instrsi } instrsi |
+        {instrtantque } instrtantque |
+        {instrappel } instrappel |
+        {instrretour } instrretour |
+        {instrecriture } instrecriture |
+        {instrvide} instrvide ;
+
+    instraffect = var equals expr semicolon ;
+
+    instrbloc = l_accolade listeinst r_accolade ;
+
+    //listeinst = instr*;
+
+    listeinst =
+        {linstrec} instr listeinst |
+        {linstfinal} ;
+
+    instrsi =
+        {avecsinon} if expr then instrbloc instrsinon|
+        {sanssinon} if expr then instrbloc ;
+
+    instrsinon = elseif instrbloc ;
+
+    instrtantque = while expr do instrbloc ;
+
+    instrappel = appelfct semicolon ;
+
+    instrretour = return expr semicolon ;
+
+    instrecriture = write l_par expr r_par semicolon ;
+
+    instrvide = semicolon ;
+
+###################
+Expressions
+###################
 	expr =
 		{ou} expr or expr_ou |
 		{simple} expr_ou;
