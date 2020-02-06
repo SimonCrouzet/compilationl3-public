@@ -48,30 +48,30 @@ Ignored Tokens
 Productions
 
     program =
-        {declarations} optdecvar listedecfonc |
-        {liste_fonction} listedecfonc;
+        {declarations} optdecvar listedecfonc ;
 
-    optdecvar = listedecvar semicolon;
+    optdecvar =
+        {dec_variables} listedecvar semicolon |
+        {no_variables} ;
 
     listedecvar =
         {declaration_variables_multiples} decvar listedecvar_chainee |
         {declarer_variable} decvar;
 
     listedecvar_chainee =
-        {decvarldecvar} comma decvar listedecvar_chainee |
-        {decvar} comma decvar ;
+        {more_variables} comma decvar listedecvar_chainee |
+        {last} comma decvar ;
 
     decvar =
-        {decvarentier} int identificator |
-        {decvartableau} int identificator l_crochet number r_crochet ;
+        {decvar_entier} int identificator |
+        {decvar_tableau} int identificator l_crochet number r_crochet ;
 
     listedecfonc =
-        {ldecfoncrec} decfonc listedecfonc |
-        {ldecfoncfinal} ;
+        {listedecfonc_rec} decfonc listedecfonc |
+        {listedecfonc_final} ;
 
     decfonc =
-        {decvarinstr} identificator listeparam optdecvar instrbloc |
-        {instr} identificator listeparam instrbloc ;
+        {decvarinstr} identificator listeparam optdecvar instrbloc ;
 
     listeparam =
         {sansparam} l_par r_par |
