@@ -3,16 +3,12 @@ Package lcompil;
 Helpers
 
 lettre = [['a' .. 'z'] + ['A' .. 'Z']];
-chiffre = ['0'..'9'];
+chiffre = ['0' .. '9'];
 alpha = [lettre + ['_' + '$']];
 alphanum = [lettre + chiffre];
 
 Tokens
 	number = chiffre+;
-	word = lettre+;
-	letter = lettre;
-	letter_min = ['a'..'z']+;
-	identificator = alpha alphanum*;
 	or = '|';
 	and = '&';
 	plus ='+';
@@ -37,10 +33,11 @@ Tokens
 	return = 'retour';
 	read = 'lire';
 	write = 'ecrire';
-	blank = (' ' | 13 | 10 | 9)*;
+	blank = (' ' | 13 | 10)+;
 	comment = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 	comma = ',';
 	semicolon = ';';
+	identificator = alpha alphanum*;
 
 Ignored Tokens
 	blank, comment;
@@ -48,11 +45,11 @@ Ignored Tokens
 Productions
 
     program =
-        {declarations} optdecvar listedecfonc ;
+        {dec_varetfct} optdecvar listedecfonc |
+        {dec_fct} listedecfonc;
 
     optdecvar =
-        {dec_variables} listedecvar semicolon |
-        {no_variables} ;
+        {dec_variables} listedecvar semicolon;
 
     listedecvar =
         {declaration_variables_multiples} decvar listedecvar_chainee |
@@ -71,7 +68,8 @@ Productions
         {listedecfonc_final} ;
 
     decfonc =
-        {decvarinstr} identificator listeparam optdecvar instrbloc ;
+        {decvarinstr} identificator listeparam optdecvar instrbloc |
+        {instr} identificator listeparam instrbloc;
 
     listeparam =
         {sansparam} l_par r_par |
@@ -87,7 +85,7 @@ Productions
         {instrecriture } instrwrite |
         {instrvide} instrvoid ;
 
-    instraffect = expr_complete equals expr semicolon ;
+    instraffect = var equals expr semicolon ;
 
     instrbloc = l_accolade listeinst r_accolade ;
 
@@ -110,9 +108,6 @@ Productions
     instrwrite = write l_par expr r_par semicolon ;
 
     instrvoid = semicolon ;
-
-    appelfct =
-        {avecparam} identificator l_par list r_par ;
 
 
 
@@ -141,16 +136,13 @@ Productions
 		
 	expr_mult =
 		{non} no expr_mult |
-		{simple} expr_no;
-		
-	expr_no =
-		{parentheses} l_par expr r_par |
 		{simple} expr_complete;
 		
 	expr_complete =
 		{nombre} number |
 		{var} var |
 		{lire} read l_par r_par |
+		{parentheses} l_par expr r_par |
 		{appelfct} appelfct;
 
 	var =
@@ -158,10 +150,14 @@ Productions
         {varsimple} identificator ;
 
 		
-	list =
-		{elementsmultiples} expr list_chainee |
+	listexpr =
+		{elementsmultiples} expr listexpr_chainee |
 		{vide} ;
 		
-	list_chainee =
-		{elementsmultiples} comma expr list_chainee |
+	listexpr_chainee =
+		{elementsmultiples} comma expr listexpr_chainee |
 		{vide} ;
+
+
+    appelfct =
+        {avecparam} identificator l_par listexpr r_par ;
