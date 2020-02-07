@@ -8,7 +8,10 @@ alpha = [lettre + ['_' + '$']];
 alphanum = [lettre + chiffre];
 
 Tokens
-	number = chiffre+;
+    blank = (' ' | 13 | 10)+;
+	comment = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
+	comma = ',';
+    semicolon = ';';
 	or = '|';
 	and = '&';
 	plus ='+';
@@ -33,10 +36,7 @@ Tokens
 	return = 'retour';
 	read = 'lire';
 	write = 'ecrire';
-	blank = (' ' | 13 | 10)+;
-	comment = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
-	comma = ',';
-	semicolon = ';';
+	number = chiffre+;
 	identificator = alpha alphanum*;
 
 Ignored Tokens
