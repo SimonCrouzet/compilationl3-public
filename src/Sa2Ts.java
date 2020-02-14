@@ -1,5 +1,6 @@
 import sa.*;
 import ts.Ts;
+import ts.TsItemFct;
 import ts.TsItemVar;
 
 public class Sa2Ts extends SaDepthFirstVisitor {
@@ -117,11 +118,49 @@ public class Sa2Ts extends SaDepthFirstVisitor {
 
     @Override
     public Object visit(SaAppel node) {
-        return super.visit(node);
+        // node.accept(this);
+        TsItemFct fct = tableGlobale.getFct(node.getNom());
+
+        if (fct == null)
+            throw new IllegalCallerException("Function " + node.getNom() + "doesn't exist!");
+
+        node.tsItem = fct;
+        return null;
     }
 
     @Override
     public Object visit(SaVarIndicee node) {
-        return super.visit(node);
+        // node.accept(this);
+        // TODO: Statuer sur le cas des tableaux de 1 case
+        // TODO: Statuer si besoin de vérifier la véracité de l'indice (et si oui, comment ?)
+
+        if (context.equals(Context.LOCAL)) {
+            TsItemVar varIndicee = tableLocaleCourante.getVar(node.getNom());
+
+            if (varIndicee == null) {
+                varIndicee = tableGlobale.getVar(node.getNom());
+
+                if (varIndicee == null)
+                    throw new IllegalCallerException("Var " + node.getNom() + " doesn't exist!");
+            }
+            node.tsItem = varIndicee;
+        }
+        else if (context.equals(Context.PARAM)) {
+            //TODO: A Vérifier
+            TsItemVar varIndicee = tableLocaleCourante.getVar(node.getNom());
+
+            if (varIndicee == null)
+                throw new IllegalCallerException("Param " + node.getNom() + " doesn't exist!");
+
+            node.tsItem = varIndicee;
+        }
+        else if (context.equals(Context.GLOBAL)) {
+            TsItemVar varIndicee = tableGlobale.getVar(node.getNom());
+            if (varIndicee == null)
+                throw new IllegalCallerException("Global var " + node.getNom() + " doesn't exist!");
+
+            node.tsItem = varIndicee;
+        }
+        return null;
     }
 }
