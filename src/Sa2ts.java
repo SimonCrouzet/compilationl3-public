@@ -3,13 +3,13 @@ import ts.Ts;
 import ts.TsItemFct;
 import ts.TsItemVar;
 
-public class Sa2Ts extends SaDepthFirstVisitor {
+public class Sa2ts extends SaDepthFirstVisitor {
     enum Context {LOCAL, PARAM, GLOBAL}
     private Ts tableGlobale;
     private Ts tableLocaleCourante = null;
     private Context context;
 
-    public Sa2Ts() {
+    public Sa2ts() {
         this.tableGlobale = new Ts();
     }
 
