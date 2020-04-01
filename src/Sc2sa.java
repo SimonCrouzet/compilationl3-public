@@ -35,7 +35,7 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseADecVariablesOptdecvar(ADecVariablesOptdecvar node) {
         SaLDec decVar = (SaLDec) apply(node.getListedecvar());
-        returnValue = new SaLDec(null, decVar);
+        returnValue = new SaLDec(decVar.getTete(), decVar.getQueue());
     }
 
     @Override
@@ -108,13 +108,14 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASansparamListeparam(ASansparamListeparam node) {
-        returnValue = new SaLExp(null, null);
+        returnValue = new SaLDec(null, null);
     }
 
     @Override
     public void caseAAvecparamListeparam(AAvecparamListeparam node) {
-        SaLExp param = (SaLExp) apply(node.getListedecvar());
-        returnValue = new SaLExp(null, param);
+        // TODO: Problème de cast
+        SaLDec param = (SaLDec) apply(node.getListedecvar());
+        returnValue = new SaLDec(null, param);
     }
 
     @Override
@@ -247,54 +248,54 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAEtExprOu(AEtExprOu node) {
-        SaExpOr op1 = (SaExpOr) apply(node.getExprOu());
-        SaExpOr op2 = (SaExpOr) apply(node.getExprEt());
+        SaExp op1 = (SaExp) apply(node.getExprOu());
+        SaExp op2 = (SaExp) apply(node.getExprEt());
         returnValue = new SaExpAnd(op1, op2);
     }
 
     @Override
     public void caseASimpleExprOu(ASimpleExprOu node) {
-        SaExpOr op2 = (SaExpOr) apply(node.getExprEt());
+        SaExp op2 = (SaExp) apply(node.getExprEt());
         returnValue = new SaExpAnd(null, op2);
     }
 
     @Override
     public void caseAEgalExprEt(AEgalExprEt node) {
-        SaExpAnd op1 = (SaExpAnd) apply(node.getExprEt());
-        SaExpAnd op2 = (SaExpAnd) apply(node.getExprEgal());
+        SaExp op1 = (SaExp) apply(node.getExprEt());
+        SaExp op2 = (SaExp) apply(node.getExprEgal());
         returnValue = new SaExpEqual(op1, op2);
     }
 
     @Override
     public void caseAInfExprEt(AInfExprEt node) {
-        SaExpAnd op1 = (SaExpAnd) apply(node.getExprEt());
-        SaExpAnd op2 = (SaExpAnd) apply(node.getExprEgal());
+        SaExp op1 = (SaExp) apply(node.getExprEt());
+        SaExp op2 = (SaExp) apply(node.getExprEgal());
         returnValue = new SaExpEqual(op1, op2);
     }
 
     @Override
     public void caseASimpleExprEt(ASimpleExprEt node) {
-        SaExpAnd op1 = (SaExpAnd) apply(node.getExprEgal());
+        SaExp op1 = (SaExp) apply(node.getExprEgal());
         returnValue = new SaExpEqual(op1, null);
     }
 
     @Override
     public void caseAPlusExprEgal(APlusExprEgal node) {
-        SaExpEqual op1 = (SaExpEqual) apply(node.getExprEgal());
-        SaExpEqual op2 = (SaExpEqual) apply(node.getExprPlus());
+        SaExp op1 = (SaExp) apply(node.getExprEgal());
+        SaExp op2 = (SaExp) apply(node.getExprPlus());
         returnValue = new SaExpAdd(op1, op2);
     }
 
     @Override
     public void caseAMoinsExprEgal(AMoinsExprEgal node) {
-        SaExpEqual op1 = (SaExpEqual) apply(node.getExprEgal());
-        SaExpEqual op2 = (SaExpEqual) apply(node.getExprPlus());
+        SaExp op1 = (SaExp) apply(node.getExprEgal());
+        SaExp op2 = (SaExp) apply(node.getExprPlus());
         returnValue = new SaExpSub(op1, op2);
     }
 
     @Override
     public void caseASimpleExprEgal(ASimpleExprEgal node) {
-        SaExpEqual op1 = (SaExpEqual) apply(node.getExprPlus());
+        SaExp op1 = (SaExp) apply(node.getExprPlus());
         returnValue = new SaExpAdd(op1, null);
     }
 
@@ -347,7 +348,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAParenthesesExprComplete(AParenthesesExprComplete node) {
-
+        returnValue = (SaExp) apply(node.getExpr());
     }
 
     @Override

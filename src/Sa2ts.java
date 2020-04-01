@@ -9,8 +9,9 @@ public class Sa2ts extends SaDepthFirstVisitor {
     private Ts tableLocaleCourante = null;
     private Context context;
 
-    public Sa2ts() {
+    public Sa2ts(SaNode saRoot) {
         this.tableGlobale = new Ts();
+        saRoot.accept(this);
     }
 
     @Override
@@ -162,5 +163,17 @@ public class Sa2ts extends SaDepthFirstVisitor {
             node.tsItem = varIndicee;
         }
         return null;
+    }
+
+    public Ts getTableGlobale() {
+        return tableGlobale;
+    }
+
+    public Ts getTableLocaleCourante() {
+        return tableLocaleCourante;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }
