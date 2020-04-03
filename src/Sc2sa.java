@@ -13,7 +13,7 @@ public class Sc2sa extends DepthFirstAdapter {
     // TODO : Check
     @Override
     public void caseStart(Start node) {
-        node.getPProgram().apply(this);
+        apply(node.getPProgram());
         // node.getEOF().apply(this);
     }
 
@@ -40,7 +40,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseADeclarationVariablesMultiplesListedecvar(ADeclarationVariablesMultiplesListedecvar node) {
-        SaDec headVar = (SaDec) apply(node.getDecvar());
+        SaDecVar headVar = (SaDecVar) apply(node.getDecvar());
         SaLDec queueVar = (SaLDec) apply(node.getListedecvarChainee());
         returnValue = new SaLDec(headVar, queueVar);
     }
@@ -48,12 +48,13 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseADeclarerVariableListedecvar(ADeclarerVariableListedecvar node) {
         SaDec var = (SaDec) apply(node.getDecvar());
-        returnValue = new SaLDec(var, null);
+        // returnValue = new SaLDec(var, null);
+        returnValue = new SaDecVar(var.getNom());
     }
 
     @Override
     public void caseAMoreVariablesListedecvarChainee(AMoreVariablesListedecvarChainee node) {
-        SaDec var = (SaDec) apply(node.getDecvar());
+        SaDecVar var = (SaDecVar) apply(node.getDecvar());
         SaLDec moreVar = (SaLDec) apply(node.getListedecvarChainee());
         returnValue = new SaLDec(var, moreVar);
     }
@@ -61,7 +62,8 @@ public class Sc2sa extends DepthFirstAdapter {
     @Override
     public void caseALastListedecvarChainee(ALastListedecvarChainee node) {
         SaDec lastVar = (SaDec) apply(node.getDecvar());
-        returnValue = new SaLDec(lastVar, null);
+        // returnValue = new SaLDec(lastVar, null);
+        returnValue = new SaDecVar(lastVar.getNom());
     }
 
     @Override
@@ -77,14 +79,14 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAListedecfoncRecListedecfonc(AListedecfoncRecListedecfonc node) {
-        SaDec headFct = (SaDec) apply(node.getDecfonc());
+        SaDecFonc headFct = (SaDecFonc) apply(node.getDecfonc());
         SaLDec queueFct = (SaLDec) apply(node.getListedecfonc());
         returnValue = new SaLDec(headFct, queueFct);
     }
 
     @Override
     public void caseAListedecfoncFinalListedecfonc(AListedecfoncFinalListedecfonc node) {
-        returnValue = new SaLDec(null, null);
+        returnValue = null;
     }
 
     @Override
@@ -92,7 +94,7 @@ public class Sc2sa extends DepthFirstAdapter {
         String name = node.getIdentificator().getText();
         SaLDec parameters = (SaLDec) apply(node.getListeparam());
         SaLDec variables = (SaLDec) apply(node.getOptdecvar());
-        SaInst body = (SaInst) apply(node.getInstrbloc());
+        SaInstBloc body = (SaInstBloc) apply(node.getInstrbloc());
 
         returnValue = new SaDecFonc(name, parameters, variables, body);
     }
@@ -101,21 +103,19 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseAInstrDecfonc(AInstrDecfonc node) {
         String name = node.getIdentificator().getText();
         SaLDec parameters = (SaLDec) apply(node.getListeparam());
-        SaInst body = (SaInst) apply(node.getInstrbloc());
+        SaInstBloc body = (SaInstBloc) apply(node.getInstrbloc());
 
         returnValue = new SaDecFonc(name, parameters, null, body);
     }
 
     @Override
     public void caseASansparamListeparam(ASansparamListeparam node) {
-        returnValue = new SaLDec(null, null);
+        returnValue = null;
     }
 
     @Override
     public void caseAAvecparamListeparam(AAvecparamListeparam node) {
-        // TODO: Problème de cast
-        SaLDec param = (SaLDec) apply(node.getListedecvar());
-        returnValue = new SaLDec(null, param);
+        returnValue = (SaLDec) apply(node.getListedecvar());
     }
 
     @Override
