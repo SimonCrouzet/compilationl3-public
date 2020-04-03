@@ -14,13 +14,13 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         this.tableLocaleCourante = null;
         root.accept(this);
     }
-/*
+
     @Override
     public C3aOperand visit(SaProg node) {
-        SaDec fct = node.getFonctions().getTete();
-        TsItemFct fctTs = new TsItemFct(fct.getNom(), nbArgs, c3a.listeInst);
-        c3a.ajouteInst(new C3aFunction());
-    }*/
+        node.getFonctions().accept(this);
+        node.getVariables().accept(this);
+        return super.visit(node);
+    }
 
     @Override
     public C3aOperand visit(SaDecTab node) {
@@ -64,6 +64,8 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaLInst node) {
+        node.getTete().accept(this);
+        node.getQueue().accept(this);
         return super.visit(node);
     }
 
@@ -80,27 +82,39 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaDecVar node) {
+        C3aVar var = (C3aVar) super.visit(node);
+        // TODO: Finish this
+        c3a.ajouteInst(new C3aInstAffect());
         return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaInstAffect node) {
-        return super.visit(node);
+        C3aOperand op1 = node.getLhs().accept(this);
+        C3aOperand result = node.getRhs().accept(this);
+        c3a.ajouteInst(new C3aInstAffect(op1, result, "affect"));
+        return op1;
     }
 
     @Override
     public C3aOperand visit(SaLDec node) {
+        node.getTete().accept(this);
+        node.getQueue().accept(this);
         return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaVarSimple node) {
-        return super.visit(node);
+        return new C3aVar(node.tsItem, null);
     }
 
     @Override
     public C3aOperand visit(SaAppel node) {
-        return super.visit(node);
+        C3aFunction function = new C3aFunction(node.tsItem);
+        // TODO: Comment récupérer la fonction déjà créée ?
+        C3aOperand result = super.visit(node);
+        c3a.ajouteInst(new C3aInstCall(function, result, "call"));
+        return result;
     }
 
     @Override
@@ -236,17 +250,21 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
 
     @Override
     public C3aOperand visit(SaInstRetour node) {
-        return super.visit(node);
+        C3aOperand op1 = node.getVal().accept(this);
+        c3a.ajouteInst(new C3aInstReturn(op1, "return"));
+        return op1;
     }
 
     @Override
     public C3aOperand visit(SaLExp node) {
+        node.getTete().accept(this);
+        node.getQueue().accept(this);
         return super.visit(node);
     }
 
     @Override
     public C3aOperand visit(SaVarIndicee node) {
-        return super.visit(node);
+        return new C3aVar(node.tsItem, node.getIndice().accept(this));
     }
 
 

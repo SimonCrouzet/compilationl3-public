@@ -44,20 +44,20 @@ public class Sa2ts extends SaDepthFirstVisitor {
 
     @Override
     public Object visit(SaDecFonc node) {
-        defaultIn(node);
-        tableLocaleCourante = new Ts();
+        if (tableGlobale.getFct(node.getNom()) != null)
+            throw new IllegalCallerException("Function " + node.getNom() + " is already defined!");
+
+        tableLocaleCourante = node.tsItem.getTable();
 
         context = Context.PARAM;
         if(node.getParametres() != null) node.getParametres().accept(this);
 
         context = Context.LOCAL;
         if(node.getVariable() != null) node.getVariable().accept(this);
-
         node.getCorps().accept(this);
 
         context = Context.GLOBAL;
         this.tableGlobale.addFct(node.getNom(), tableLocaleCourante.nbArg(), tableLocaleCourante, node);
-        defaultOut(node);
         return null;
     }
 
@@ -102,7 +102,7 @@ public class Sa2ts extends SaDepthFirstVisitor {
             //TODO: A Vérifier
             TsItemVar varSimple = tableLocaleCourante.getVar(node.getNom());
 
-            if (varSimple == null)
+            if (varSimple == null || !varSimple.isParam)
                 throw new IllegalCallerException("Param " + node.getNom() + " doesn't exist!");
 
             node.tsItem = varSimple;
