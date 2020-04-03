@@ -12,6 +12,11 @@ public class Sa2ts extends SaDepthFirstVisitor {
     public Sa2ts(SaNode saRoot) {
         this.tableGlobale = new Ts();
         saRoot.accept(this);
+
+        if (tableGlobale.getFct("main") == null)
+            throw new IllegalStateException("No function main!");
+        if (tableGlobale.getFct("main").getNbArgs() != 0)
+            throw new IllegalStateException("Function main shouldn't have any arguments!");
     }
 
     @Override
@@ -98,7 +103,7 @@ public class Sa2ts extends SaDepthFirstVisitor {
             }
             node.tsItem = varSimple;
         }
-        else if (context.equals(Context.PARAM)) {
+        /*else if (context.equals(Context.PARAM)) {
             //TODO: A Vérifier
             TsItemVar varSimple = tableLocaleCourante.getVar(node.getNom());
 
@@ -107,13 +112,17 @@ public class Sa2ts extends SaDepthFirstVisitor {
 
             node.tsItem = varSimple;
         }
-        else if (context.equals(Context.GLOBAL)) {
+        else if (context.equals(Context.GLOBAL)) {*/
+        else{
             TsItemVar varSimple = tableGlobale.getVar(node.getNom());
             if (varSimple == null)
                 throw new IllegalCallerException("Global var " + node.getNom() + " doesn't exist!");
 
             node.tsItem = varSimple;
         }
+        if (node.tsItem.getTaille() > 1)
+            throw new IllegalCallerException("Wrong call to indexed variable.");
+
         return null;
     }
 
@@ -126,6 +135,13 @@ public class Sa2ts extends SaDepthFirstVisitor {
             throw new IllegalCallerException("Function " + node.getNom() + "doesn't exist!");
 
         node.tsItem = fct;
+
+        if (node.getArguments() != null)
+            node.getArguments().accept(this);
+
+        if (node.tsItem.getNbArgs() != node.getArguments().length())
+            throw new IllegalStateException("Conflict during arguments exploration!");
+
         return null;
     }
 
@@ -146,7 +162,7 @@ public class Sa2ts extends SaDepthFirstVisitor {
             }
             node.tsItem = varIndicee;
         }
-        else if (context.equals(Context.PARAM)) {
+        /*else if (context.equals(Context.PARAM)) {
             //TODO: A Vérifier
             TsItemVar varIndicee = tableLocaleCourante.getVar(node.getNom());
 
@@ -155,13 +171,18 @@ public class Sa2ts extends SaDepthFirstVisitor {
 
             node.tsItem = varIndicee;
         }
-        else if (context.equals(Context.GLOBAL)) {
+        else if (context.equals(Context.GLOBAL)) {*/
+        else{
             TsItemVar varIndicee = tableGlobale.getVar(node.getNom());
             if (varIndicee == null)
                 throw new IllegalCallerException("Global var " + node.getNom() + " doesn't exist!");
 
             node.tsItem = varIndicee;
         }
+
+        if (node.tsItem.getTaille() < 1)
+            throw new IllegalCallerException("Wrong call to indexed variable.");
+
         return null;
     }
 
