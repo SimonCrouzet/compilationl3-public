@@ -1,8 +1,6 @@
-procedure(entier a, entier b)
-{
-retour(a);
-}
+entier a;
 main()
 {
-ecrire(procedure(1, 2));
+a = 123;
+ecrire(a);
 }

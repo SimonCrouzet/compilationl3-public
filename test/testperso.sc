@@ -1,63 +1,37 @@
 <Start>
- <ADecFctProgram>
+ <ADecVaretfctProgram>
+  <ADecVariablesOptdecvar>
+   <ADeclarerVariableListedecvar>
+    <ADecvarEntierDecvar>
+    </ADecvarEntierDecvar>
+   </ADeclarerVariableListedecvar>
+  </ADecVariablesOptdecvar>
   <AListedecfoncRecListedecfonc>
    <AInstrDecfonc>
-    <AAvecparamListeparam>
-     <ADeclarationVariablesMultiplesListedecvar>
-      <ADecvarEntierDecvar>
-      </ADecvarEntierDecvar>
-      <ALastListedecvarChainee>
-       <ADecvarEntierDecvar>
-       </ADecvarEntierDecvar>
-      </ALastListedecvarChainee>
-     </ADeclarationVariablesMultiplesListedecvar>
-    </AAvecparamListeparam>
+    <ASansparamListeparam>
+    </ASansparamListeparam>
     <AInstrbloc>
      <ALinstrecListeinst>
-      <AInstrretourInstr>
-       <AInstrreturn>
+      <AInstraffectInstr>
+       <AInstraffect>
+        <AVarsimpleVar>
+        </AVarsimpleVar>
         <ASimpleExpr>
          <ASimpleExprOu>
           <ASimpleExprEt>
            <ASimpleExprEgal>
             <ASimpleExprPlus>
              <ASimpleExprMult>
-              <AParenthesesExprComplete>
-               <ASimpleExpr>
-                <ASimpleExprOu>
-                 <ASimpleExprEt>
-                  <ASimpleExprEgal>
-                   <ASimpleExprPlus>
-                    <ASimpleExprMult>
-                     <AVarExprComplete>
-                      <AVarsimpleVar>
-                      </AVarsimpleVar>
-                     </AVarExprComplete>
-                    </ASimpleExprMult>
-                   </ASimpleExprPlus>
-                  </ASimpleExprEgal>
-                 </ASimpleExprEt>
-                </ASimpleExprOu>
-               </ASimpleExpr>
-              </AParenthesesExprComplete>
+              <ANombreExprComplete>
+              </ANombreExprComplete>
              </ASimpleExprMult>
             </ASimpleExprPlus>
            </ASimpleExprEgal>
           </ASimpleExprEt>
          </ASimpleExprOu>
         </ASimpleExpr>
-       </AInstrreturn>
-      </AInstrretourInstr>
-      <ALinstfinalListeinst>
-      </ALinstfinalListeinst>
-     </ALinstrecListeinst>
-    </AInstrbloc>
-   </AInstrDecfonc>
-   <AListedecfoncRecListedecfonc>
-    <AInstrDecfonc>
-     <ASansparamListeparam>
-     </ASansparamListeparam>
-     <AInstrbloc>
+       </AInstraffect>
+      </AInstraffectInstr>
       <ALinstrecListeinst>
        <AInstrecritureInstr>
         <AInstrwrite>
@@ -67,44 +41,10 @@
             <ASimpleExprEgal>
              <ASimpleExprPlus>
               <ASimpleExprMult>
-               <AAppelfctExprComplete>
-                <AAvecparamAppelfct>
-                 <AElementsmultiplesListexpr>
-                  <ASimpleExpr>
-                   <ASimpleExprOu>
-                    <ASimpleExprEt>
-                     <ASimpleExprEgal>
-                      <ASimpleExprPlus>
-                       <ASimpleExprMult>
-                        <ANombreExprComplete>
-                        </ANombreExprComplete>
-                       </ASimpleExprMult>
-                      </ASimpleExprPlus>
-                     </ASimpleExprEgal>
-                    </ASimpleExprEt>
-                   </ASimpleExprOu>
-                  </ASimpleExpr>
-                  <AElementsmultiplesListexprChainee>
-                   <ASimpleExpr>
-                    <ASimpleExprOu>
-                     <ASimpleExprEt>
-                      <ASimpleExprEgal>
-                       <ASimpleExprPlus>
-                        <ASimpleExprMult>
-                         <ANombreExprComplete>
-                         </ANombreExprComplete>
-                        </ASimpleExprMult>
-                       </ASimpleExprPlus>
-                      </ASimpleExprEgal>
-                     </ASimpleExprEt>
-                    </ASimpleExprOu>
-                   </ASimpleExpr>
-                   <AVideListexprChainee>
-                   </AVideListexprChainee>
-                  </AElementsmultiplesListexprChainee>
-                 </AElementsmultiplesListexpr>
-                </AAvecparamAppelfct>
-               </AAppelfctExprComplete>
+               <AVarExprComplete>
+                <AVarsimpleVar>
+                </AVarsimpleVar>
+               </AVarExprComplete>
               </ASimpleExprMult>
              </ASimpleExprPlus>
             </ASimpleExprEgal>
@@ -116,11 +56,11 @@
        <ALinstfinalListeinst>
        </ALinstfinalListeinst>
       </ALinstrecListeinst>
-     </AInstrbloc>
-    </AInstrDecfonc>
-    <AListedecfoncFinalListedecfonc>
-    </AListedecfoncFinalListedecfonc>
-   </AListedecfoncRecListedecfonc>
+     </ALinstrecListeinst>
+    </AInstrbloc>
+   </AInstrDecfonc>
+   <AListedecfoncFinalListedecfonc>
+   </AListedecfoncFinalListedecfonc>
   </AListedecfoncRecListedecfonc>
- </ADecFctProgram>
+ </ADecVaretfctProgram>
 </Start>

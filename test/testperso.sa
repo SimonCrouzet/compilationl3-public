@@ -1,53 +1,33 @@
 <SaProg>
  <SaLDec>
+  <SaDecVar>
+   <nom>a</nom>
+  </SaDecVar>
+ </SaLDec>
+ <SaLDec>
   <SaDecFonc>
-   <nom>procedure</nom>
-   <SaLDec>
-    <SaDecVar>
-     <nom>a</nom>
-    </SaDecVar>
-    <SaLDec>
-     <SaDecVar>
-      <nom>b</nom>
-     </SaDecVar>
-    </SaLDec>
-   </SaLDec>
+   <nom>main</nom>
    <SaInstBloc>
     <SaLInst>
-     <SaInstRetour>
-      <SaExpVar>
-       <SaVarSimple>
-        <nom>a</nom>
-       </SaVarSimple>
-      </SaExpVar>
-     </SaInstRetour>
+     <SaInstAffect>
+      <SaVarSimple>
+       <nom>a</nom>
+      </SaVarSimple>
+      <SaExpInt>
+       <val>123</val>
+      </SaExpInt>
+     </SaInstAffect>
+     <SaLInst>
+      <SaInstEcriture>
+       <SaExpVar>
+        <SaVarSimple>
+         <nom>a</nom>
+        </SaVarSimple>
+       </SaExpVar>
+      </SaInstEcriture>
+     </SaLInst>
     </SaLInst>
    </SaInstBloc>
   </SaDecFonc>
-  <SaLDec>
-   <SaDecFonc>
-    <nom>main</nom>
-    <SaInstBloc>
-     <SaLInst>
-      <SaInstEcriture>
-       <SaExpAppel>
-        <SaAppel>
-         <SaLExp>
-          <SaExpInt>
-           <val>1</val>
-          </SaExpInt>
-          <SaLExp>
-           <SaExpInt>
-            <val>2</val>
-           </SaExpInt>
-          </SaLExp>
-         </SaLExp>
-        </SaAppel>
-       </SaExpAppel>
-      </SaInstEcriture>
-     </SaLInst>
-    </SaInstBloc>
-   </SaDecFonc>
-  </SaLDec>
  </SaLDec>
 </SaProg>
