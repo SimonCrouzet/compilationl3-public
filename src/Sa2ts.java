@@ -9,8 +9,14 @@ public class Sa2ts extends SaDepthFirstVisitor {
     private Ts tableLocaleCourante = null;
     private Context context;
 
-    public Sa2ts() {
+    public Sa2ts(SaNode saRoot) {
         this.tableGlobale = new Ts();
+        saRoot.accept(this);
+
+        if (tableGlobale.getFct("main") == null)
+            throw new IllegalStateException("No function main!");
+        if (tableGlobale.getFct("main").getNbArgs() != 0)
+            throw new IllegalStateException("Function main shouldn't have any arguments!");
     }
 
     @Override
@@ -43,20 +49,20 @@ public class Sa2ts extends SaDepthFirstVisitor {
 
     @Override
     public Object visit(SaDecFonc node) {
-        defaultIn(node);
-        tableLocaleCourante = new Ts();
+        if (tableGlobale.getFct(node.getNom()) != null)
+            throw new IllegalCallerException("Function " + node.getNom() + " is already defined!");
+
+        tableLocaleCourante = node.tsItem.getTable();
 
         context = Context.PARAM;
         if(node.getParametres() != null) node.getParametres().accept(this);
 
         context = Context.LOCAL;
         if(node.getVariable() != null) node.getVariable().accept(this);
-
         node.getCorps().accept(this);
 
         context = Context.GLOBAL;
         this.tableGlobale.addFct(node.getNom(), tableLocaleCourante.nbArg(), tableLocaleCourante, node);
-        defaultOut(node);
         return null;
     }
 
@@ -97,22 +103,26 @@ public class Sa2ts extends SaDepthFirstVisitor {
             }
             node.tsItem = varSimple;
         }
-        else if (context.equals(Context.PARAM)) {
+        /*else if (context.equals(Context.PARAM)) {
             //TODO: A Vérifier
             TsItemVar varSimple = tableLocaleCourante.getVar(node.getNom());
 
-            if (varSimple == null)
+            if (varSimple == null || !varSimple.isParam)
                 throw new IllegalCallerException("Param " + node.getNom() + " doesn't exist!");
 
             node.tsItem = varSimple;
         }
-        else if (context.equals(Context.GLOBAL)) {
+        else if (context.equals(Context.GLOBAL)) {*/
+        else{
             TsItemVar varSimple = tableGlobale.getVar(node.getNom());
             if (varSimple == null)
                 throw new IllegalCallerException("Global var " + node.getNom() + " doesn't exist!");
 
             node.tsItem = varSimple;
         }
+        if (node.tsItem.getTaille() > 1)
+            throw new IllegalCallerException("Wrong call to indexed variable.");
+
         return null;
     }
 
@@ -125,6 +135,13 @@ public class Sa2ts extends SaDepthFirstVisitor {
             throw new IllegalCallerException("Function " + node.getNom() + "doesn't exist!");
 
         node.tsItem = fct;
+
+        if (node.getArguments() != null)
+            node.getArguments().accept(this);
+
+        if (node.tsItem.getNbArgs() != node.getArguments().length())
+            throw new IllegalStateException("Conflict during arguments exploration!");
+
         return null;
     }
 
@@ -145,7 +162,7 @@ public class Sa2ts extends SaDepthFirstVisitor {
             }
             node.tsItem = varIndicee;
         }
-        else if (context.equals(Context.PARAM)) {
+        /*else if (context.equals(Context.PARAM)) {
             //TODO: A Vérifier
             TsItemVar varIndicee = tableLocaleCourante.getVar(node.getNom());
 
@@ -154,13 +171,30 @@ public class Sa2ts extends SaDepthFirstVisitor {
 
             node.tsItem = varIndicee;
         }
-        else if (context.equals(Context.GLOBAL)) {
+        else if (context.equals(Context.GLOBAL)) {*/
+        else{
             TsItemVar varIndicee = tableGlobale.getVar(node.getNom());
             if (varIndicee == null)
                 throw new IllegalCallerException("Global var " + node.getNom() + " doesn't exist!");
 
             node.tsItem = varIndicee;
         }
+
+        if (node.tsItem.getTaille() < 1)
+            throw new IllegalCallerException("Wrong call to indexed variable.");
+
         return null;
+    }
+
+    public Ts getTableGlobale() {
+        return tableGlobale;
+    }
+
+    public Ts getTableLocaleCourante() {
+        return tableLocaleCourante;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }
