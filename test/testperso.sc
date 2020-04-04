@@ -1,24 +1,26 @@
 <Start>
- <ADecVaretfctProgram>
-  <ADecVariablesOptdecvar>
-   <ADeclarerVariableListedecvar>
-    <ADecvarEntierDecvar>
-    </ADecvarEntierDecvar>
-   </ADeclarerVariableListedecvar>
-  </ADecVariablesOptdecvar>
+ <ADecFctProgram>
   <AListedecfoncRecListedecfonc>
    <AInstrDecfonc>
     <ASansparamListeparam>
     </ASansparamListeparam>
     <AInstrbloc>
      <ALinstrecListeinst>
-      <AInstraffectInstr>
-       <AInstraffect>
-        <AVarsimpleVar>
-        </AVarsimpleVar>
+      <AInstrecritureInstr>
+       <AInstrwrite>
         <ASimpleExpr>
          <ASimpleExprOu>
-          <ASimpleExprEt>
+          <AInfExprEt>
+           <ASimpleExprEt>
+            <ASimpleExprEgal>
+             <ASimpleExprPlus>
+              <ASimpleExprMult>
+               <ANombreExprComplete>
+               </ANombreExprComplete>
+              </ASimpleExprMult>
+             </ASimpleExprPlus>
+            </ASimpleExprEgal>
+           </ASimpleExprEt>
            <ASimpleExprEgal>
             <ASimpleExprPlus>
              <ASimpleExprMult>
@@ -27,40 +29,18 @@
              </ASimpleExprMult>
             </ASimpleExprPlus>
            </ASimpleExprEgal>
-          </ASimpleExprEt>
+          </AInfExprEt>
          </ASimpleExprOu>
         </ASimpleExpr>
-       </AInstraffect>
-      </AInstraffectInstr>
-      <ALinstrecListeinst>
-       <AInstrecritureInstr>
-        <AInstrwrite>
-         <ASimpleExpr>
-          <ASimpleExprOu>
-           <ASimpleExprEt>
-            <ASimpleExprEgal>
-             <ASimpleExprPlus>
-              <ASimpleExprMult>
-               <AVarExprComplete>
-                <AVarsimpleVar>
-                </AVarsimpleVar>
-               </AVarExprComplete>
-              </ASimpleExprMult>
-             </ASimpleExprPlus>
-            </ASimpleExprEgal>
-           </ASimpleExprEt>
-          </ASimpleExprOu>
-         </ASimpleExpr>
-        </AInstrwrite>
-       </AInstrecritureInstr>
-       <ALinstfinalListeinst>
-       </ALinstfinalListeinst>
-      </ALinstrecListeinst>
+       </AInstrwrite>
+      </AInstrecritureInstr>
+      <ALinstfinalListeinst>
+      </ALinstfinalListeinst>
      </ALinstrecListeinst>
     </AInstrbloc>
    </AInstrDecfonc>
    <AListedecfoncFinalListedecfonc>
    </AListedecfoncFinalListedecfonc>
   </AListedecfoncRecListedecfonc>
- </ADecVaretfctProgram>
+ </ADecFctProgram>
 </Start>

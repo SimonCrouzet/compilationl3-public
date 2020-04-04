@@ -1,6 +1,5 @@
-entier a;
 main()
 {
-a = 123;
-ecrire(a);
+ecrire(3 < 10);
 }
+
