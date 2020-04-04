@@ -10,12 +10,13 @@ public class Sc2sa extends DepthFirstAdapter {
         return returnValue;
     }
 
-    // TODO : Check
     @Override
     public void caseStart(Start node) {
         apply(node.getPProgram());
         // node.getEOF().apply(this);
     }
+
+    // TODO: Porblème sur Optdecvar, qui n'est pas exploré normalement
 
     @Override
     public void caseADecVaretfctProgram(ADecVaretfctProgram node) {
@@ -213,8 +214,7 @@ public class Sc2sa extends DepthFirstAdapter {
         SaInstBloc inst = (SaInstBloc) apply(node.getInstrbloc());
         returnValue = new SaInstTantQue(exp, inst);
     }
-
-    // TODO : String à trouver
+    
     @Override
     public void caseAInstrappel(AInstrappel node) {
         apply(node.getAppelfct());
