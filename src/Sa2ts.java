@@ -73,8 +73,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
     public Void visit(SaDecFonc node) {
         if (tableGlobale.getFct(node.getNom()) != null)
             throw new TsException("Function " + node.getNom() + " is already defined!");
-        // TODO: Check if no confusion is made with tableLocalCourante
-        // tableLocaleCourante = node.tsItem.getTable();
         tableLocaleCourante = new Ts();
 
         context = Context.PARAM;
@@ -102,16 +100,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             }
             node.tsItem = varSimple;
         }
-        /*else if (context.equals(Context.PARAM)) {
-            //TODO: A Vérifier
-            TsItemVar varSimple = tableLocaleCourante.getVar(node.getNom());
-
-            if (varSimple == null || !varSimple.isParam)
-                throw new TsException("Param " + node.getNom() + " doesn't exist!");
-
-            node.tsItem = varSimple;
-        }
-        else if (context.equals(Context.GLOBAL)) {*/
         else{
             TsItemVar varSimple = tableGlobale.getVar(node.getNom());
             if (varSimple == null)
@@ -127,8 +115,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
 
     @Override
     public Void visit(SaVarIndicee node) {
-        // TODO: Statuer sur le cas des tableaux de 1 case
-
         if (context.equals(Context.LOCAL)) {
             TsItemVar varIndicee = tableLocaleCourante.getVar(node.getNom());
 
@@ -140,16 +126,6 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             }
             node.tsItem = varIndicee;
         }
-        /*else if (context.equals(Context.PARAM)) {
-            //TODO: A Vérifier
-            TsItemVar varIndicee = tableLocaleCourante.getVar(node.getNom());
-
-            if (varIndicee == null)
-                throw new TsException("Param " + node.getNom() + " doesn't exist!");
-
-            node.tsItem = varIndicee;
-        }
-        else if (context.equals(Context.GLOBAL)) {*/
         else{
             TsItemVar varIndicee = tableGlobale.getVar(node.getNom());
             if (varIndicee == null)
@@ -158,6 +134,7 @@ public class Sa2ts extends SaDepthFirstVisitor<Void> {
             node.tsItem = varIndicee;
         }
 
+        // TODO: Statuer sur le cas des tableaux de 1 case
         if (node.tsItem.getTaille() < 1)
             throw new TsException("Wrong call to indexed variable.");
 
