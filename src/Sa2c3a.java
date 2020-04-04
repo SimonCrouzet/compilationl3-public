@@ -57,13 +57,11 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
         node.getFaire().accept(this);
         c3a.ajouteInst(new C3aInstJump(testLabel, "do while"));
         c3a.addLabelToNextInst(suite);
-        return test; // TODO: Check
+        return null;
     }
 
     @Override
     public C3aOperand visit(SaLInst node) {
-        // node.getTete().accept(this);
-        // node.getQueue().accept(this);
         return super.visit(node);
     }
 
@@ -106,20 +104,18 @@ public class Sa2c3a extends SaDepthFirstVisitor<C3aOperand> {
     @Override
     public C3aOperand visit(SaAppel node) {
         C3aFunction function = new C3aFunction(node.tsItem);
-        // TODO: Comment récupérer la fonction déjà créée ?
-        C3aOperand result = super.visit(node);
-        c3a.ajouteInst(new C3aInstCall(function, result, ""));
-        return result;
+        if (node.getArguments() != null) node.getArguments().accept(this);
+        c3a.ajouteInst(new C3aInstCall(function, null, ""));
+        return function;
     }
 
     @Override
     public C3aOperand visit(SaExpAppel node) {
         C3aTemp temp = c3a.newTemp();
 
-        // TODO: Check this
-        C3aFunction fct = new C3aFunction(node.getVal().tsItem);
+        C3aFunction function = new C3aFunction(node.getVal().tsItem);
         if (node.getVal().getArguments() != null) node.getVal().getArguments().accept(this);
-        c3a.ajouteInst(new C3aInstCall(fct, temp, ""));
+        c3a.ajouteInst(new C3aInstCall(function, temp, ""));
 
         return temp;
     }
