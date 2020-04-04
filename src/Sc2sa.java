@@ -26,55 +26,59 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseADecFctProgram(ADecFctProgram node) {
-        SaLDec fonction = (SaLDec) apply(node.getListedecfonc());
         SaLDec variable = null;
+        SaLDec fonction = (SaLDec) apply(node.getListedecfonc());
         returnValue = new SaProg(variable, fonction);
     }
 
 
     @Override
     public void caseADecVariablesOptdecvar(ADecVariablesOptdecvar node) {
-        SaLDec decVar = (SaLDec) apply(node.getListedecvar());
-        returnValue = new SaLDec(decVar.getTete(), decVar.getQueue());
+        returnValue = (SaLDec) apply(node.getListedecvar());
+        // SaLDec decVar = (SaLDec) apply(node.getListedecvar());
+        // returnValue = new SaLDec(decVar.getTete(), decVar.getQueue());
     }
 
     @Override
     public void caseADeclarationVariablesMultiplesListedecvar(ADeclarationVariablesMultiplesListedecvar node) {
-        SaDecVar headVar = (SaDecVar) apply(node.getDecvar());
+        SaDec headVar = (SaDec) apply(node.getDecvar());
         SaLDec queueVar = (SaLDec) apply(node.getListedecvarChainee());
         returnValue = new SaLDec(headVar, queueVar);
     }
 
     @Override
     public void caseADeclarerVariableListedecvar(ADeclarerVariableListedecvar node) {
-        SaDec var = (SaDec) apply(node.getDecvar());
-        // returnValue = new SaLDec(var, null);
-        returnValue = new SaDecVar(var.getNom());
+        // SaDec var = (SaDec) apply(node.getDecvar());
+        // returnValue = new SaDecVar(var.getNom());
+        returnValue = (SaDec) apply(node.getDecvar());
     }
 
     @Override
     public void caseAMoreVariablesListedecvarChainee(AMoreVariablesListedecvarChainee node) {
-        SaDecVar var = (SaDecVar) apply(node.getDecvar());
+        SaDec var = (SaDec) apply(node.getDecvar());
         SaLDec moreVar = (SaLDec) apply(node.getListedecvarChainee());
         returnValue = new SaLDec(var, moreVar);
     }
 
     @Override
     public void caseALastListedecvarChainee(ALastListedecvarChainee node) {
-        SaDec lastVar = (SaDec) apply(node.getDecvar());
-        // returnValue = new SaLDec(lastVar, null);
-        returnValue = new SaDecVar(lastVar.getNom());
+        // SaDec lastVar = (SaDec) apply(node.getDecvar());
+        // returnValue = new SaDecVar(lastVar.getNom());
+        returnValue = (SaDec) apply(node.getDecvar());
     }
 
     @Override
     public void caseADecvarEntierDecvar(ADecvarEntierDecvar node) {
-        returnValue = new SaDecVar(node.getIdentificator().getText());
+        String name = node.getIdentificator().getText();
+        returnValue = new SaDecVar(name);
     }
 
-    // TODO : Check
     @Override
     public void caseADecvarTableauDecvar(ADecvarTableauDecvar node) {
-        returnValue = new SaDecTab(node.getIdentificator().getText(), node.getInt().getLine());
+        // SaVarIndicee var = (SaVarIndicee) apply(node.get)
+        String name = node.getIdentificator().getText();
+        int length = Integer.parseInt(node.getNumber().getText());
+        returnValue = new SaDecTab(name, length);
     }
 
     @Override
@@ -180,7 +184,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseALinstfinalListeinst(ALinstfinalListeinst node) {
-        returnValue = new SaLInst(null, null);
+        returnValue = null;
     }
 
     @Override
@@ -242,8 +246,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASimpleExpr(ASimpleExpr node) {
-        SaExp op2 = (SaExp) apply(node.getExprOu());
-        returnValue = new SaExpOr(null, op2);
+        returnValue = (SaExp) apply(node.getExprOu());
     }
 
     @Override
@@ -255,8 +258,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASimpleExprOu(ASimpleExprOu node) {
-        SaExp op2 = (SaExp) apply(node.getExprEt());
-        returnValue = new SaExpAnd(null, op2);
+        returnValue = (SaExp) apply(node.getExprEt());
     }
 
     @Override
@@ -270,13 +272,12 @@ public class Sc2sa extends DepthFirstAdapter {
     public void caseAInfExprEt(AInfExprEt node) {
         SaExp op1 = (SaExp) apply(node.getExprEt());
         SaExp op2 = (SaExp) apply(node.getExprEgal());
-        returnValue = new SaExpEqual(op1, op2);
+        returnValue = new SaExpInf(op1, op2);
     }
 
     @Override
     public void caseASimpleExprEt(ASimpleExprEt node) {
-        SaExp op1 = (SaExp) apply(node.getExprEgal());
-        returnValue = new SaExpEqual(op1, null);
+        returnValue = (SaExp) apply(node.getExprEgal());
     }
 
     @Override
@@ -295,8 +296,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASimpleExprEgal(ASimpleExprEgal node) {
-        SaExp op1 = (SaExp) apply(node.getExprPlus());
-        returnValue = new SaExpAdd(op1, null);
+        returnValue = (SaExp) apply(node.getExprPlus());
     }
 
     @Override
@@ -315,8 +315,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASimpleExprPlus(ASimpleExprPlus node) {
-        SaExp op1 = (SaExp) apply(node.getExprMult());
-        returnValue = new SaExpMult(op1, null);
+        returnValue = (SaExp) apply(node.getExprMult());
     }
 
     @Override
@@ -327,7 +326,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseASimpleExprMult(ASimpleExprMult node) {
-        returnValue = apply(node.getExprComplete());
+        returnValue = (SaExp) apply(node.getExprComplete());
     }
 
     @Override
@@ -376,7 +375,7 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAVideListexpr(AVideListexpr node) {
-        returnValue = new SaLExp(null, null);
+        returnValue = null;
     }
 
     @Override
@@ -388,14 +387,15 @@ public class Sc2sa extends DepthFirstAdapter {
 
     @Override
     public void caseAVideListexprChainee(AVideListexprChainee node) {
-        returnValue = new SaLExp(null, null);
+        returnValue = null;
     }
 
     @Override
     public void caseAAvecparamAppelfct(AAvecparamAppelfct node) {
         String name = node.getIdentificator().getText();
-        SaLExp params = (SaLExp) apply(node.getListexpr()) ;
-        returnValue = new SaAppel(name, params);
+        SaLExp params = (SaLExp) apply(node.getListexpr());
+        returnValue = new SaExpAppel(new SaAppel(name, params));
+        //returnValue = new SaAppel(name, params);
     }
 
 
