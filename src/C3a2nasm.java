@@ -9,6 +9,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
     private C3a c3a;
     private Nasm nasm;
     private Ts globalTable;
+    private Ts localTable;
     private TsItemFct currentFct;
 
     public C3a2nasm(C3a c3a, Ts globalTable) {
@@ -41,11 +42,26 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstCall inst) {
+        NasmOperand op1 = inst.op1.accept(this);
+        NasmOperand result = inst.result.accept(this);
+        Ts table = inst.op1.getValue().getTable();
+
+        nasm.ajouteInst(new NasmSub(getLabel(inst), esp, new NasmConstant(4), "Call"));
+        nasm.ajouteInst(new NasmCall(null, op1, ""));
+        nasm.ajouteInst(new NasmPop(null, result, ""));
+
+        if (table.nbArg() > 0)
+            nasm.ajouteInst(new NasmAdd(null, esp, new NasmConstant(table.nbArg() * 4), ""));
         return null;
     }
 
     @Override
     public NasmOperand visit(C3aInstFBegin inst) {
+        localTable = inst.val.getTable();
+        NasmLabel label = new NasmLabel(inst.val.getIdentif());
+        nasm.ajouteInst(new NasmPush(label, ebp, "FBegin"));
+        nasm.ajouteInst(new NasmMov(null, ebp, esp, ""));
+        nasm.ajouteInst(new NasmSub(null, esp, new NasmConstant(localTable.nbVar() * 4), ""));
         return null;
     }
 
@@ -105,6 +121,18 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstAffect inst) {
+        NasmOperand op1 = inst.op1.accept(this);
+        NasmOperand result = inst.result.accept(this);
+
+        // TODO: Check if we have to avoid any mov between two adresses
+        if (result instanceof NasmAddress && op1 instanceof NasmAddress) {
+            // throw new IllegalStateException("InstAffect should concern a valid register!");
+            NasmRegister register = nasm.newRegister();
+            nasm.ajouteInst(new NasmMov(getLabel(inst), register, op1, "Affect"));
+            nasm.ajouteInst(new NasmMov(null, result, register, ""));
+        }
+        else
+            nasm.ajouteInst(new NasmMov(getLabel(inst), result, op1, "Affect"));
         return null;
     }
 
@@ -135,6 +163,9 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstFEnd inst) {
+        nasm.ajouteInst(new NasmAdd(getLabel(inst), esp, new NasmConstant(localTable.nbVar() * 4), "FEnd"));
+        nasm.ajouteInst(new NasmPop(null, ebp, ""));
+        nasm.ajouteInst(new NasmRet(null, ""));
         return null;
     }
 
@@ -167,11 +198,16 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aInstParam inst) {
+        NasmOperand param = inst.op1.accept(this);
+        nasm.ajouteInst(new NasmPush(getLabel(inst), param, "Param"));
         return null;
     }
 
     @Override
     public NasmOperand visit(C3aInstReturn inst) {
+        NasmOperand ret = inst.op1.accept(this);
+        NasmAddress address = new NasmAddress(ebp, '+', new NasmConstant(2));
+        nasm.ajouteInst(new NasmMov(getLabel(inst), address, ret, "Return"));
         return null;
     }
 
@@ -235,7 +271,7 @@ public class C3a2nasm implements C3aVisitor<NasmOperand> {
 
     @Override
     public NasmOperand visit(C3aFunction oper) {
-        return null;
+        return new NasmLabel(oper.toString());
     }
 
     public Nasm getNasm() {
