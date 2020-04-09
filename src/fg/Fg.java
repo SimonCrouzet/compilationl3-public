@@ -17,6 +17,65 @@ public class Fg implements NasmVisitor <Void> {
 	this.node2Inst = new HashMap< Node, NasmInst>();
 	this.label2Inst = new HashMap< String, NasmInst>();
 	this.graph = new Graph();
+
+
+    }
+
+    private void initializeNodes() {
+        for (NasmInst inst : nasm.listeInst) {
+            Node newNode = graph.newNode();
+            inst2Node.put(inst, newNode);
+            node2Inst.put(newNode, inst);
+            if (inst.label != null) {
+                // TODO: Check cast
+                NasmLabel label = (NasmLabel) inst.label;
+                label2Inst.put(label.toString(), inst);
+            }
+        }
+    }
+
+    private void initializeEdges() {
+        for (NasmInst inst : nasm.listeInst) {
+            // TODO: Raise exceptions?
+            if (inst.source == null || inst.destination == null)
+                return;
+            Node from = inst2Node.get(label2Inst.get(inst.source.toString()));
+            Node to = inst2Node.get(label2Inst.get(inst.destination.toString()));
+            if (from == null || to == null)
+                return;
+            // TODO: Revenir là-dessus !
+            graph.addEdge(from, to);
+        }
+    }
+
+    private void addEdgeWithInst(NasmInst source, NasmInst destination) {
+        if (source == null || destination == null)
+            throw new FgException("ERROR: Can't create an edge without a source and a destination");
+        Node from = inst2Node.get(source);
+        Node to = inst2Node.get(destination);
+        if (from == null || to == null)
+            throw new FgException("ERROR: No nodes matching with given Source or destination ");
+        graph.addEdge(from, to);
+    }
+
+    private void addEdgeWithLabel(NasmInst source, NasmLabel destination) {
+        if (source == null || destination == null)
+            throw new FgException("ERROR: Can't create an edge without a source and a destination");
+        NasmInst destinationInst = label2Inst.get(destination.toString());
+        if (destinationInst == null)
+            throw new FgException("ERROR: No instruction matching with the given label");
+        addEdgeWithInst(source, destinationInst);
+    }
+
+    private NasmInst getNextInst(NasmInst previousInst) {
+        if (previousInst == null)
+            throw new FgException("ERROR: Need previous instruction to find the next one");
+        int instIndex = nasm.listeInst.indexOf(previousInst);
+        if (instIndex == -1)
+            throw new FgException("ERROR: Instruction doesn't appear on the NASM");
+        if (instIndex == nasm.listeInst.size())
+            throw new FgException("ERROR: No next instruction");
+        return nasm.listeInst.get(instIndex + 1);
     }
 
     public void affiche(String baseFileName){
@@ -46,34 +105,117 @@ public class Fg implements NasmVisitor <Void> {
 	}
     }
     
-    public Void visit(NasmAdd inst){return null;}
-    public Void visit(NasmCall inst){return null;}
-    public Void visit(NasmDiv inst){return null;}
-    public Void visit(NasmJe inst){return null;}
-    public Void visit(NasmJle inst){return null;}
-    public Void visit(NasmJne inst){return null;}
-    public Void visit(NasmMul inst){return null;}
-    public Void visit(NasmOr inst){return null;}
-    public Void visit(NasmCmp inst){return null;}
-    public Void visit(NasmInst inst){return null;}
-    public Void visit(NasmJge inst){return null;}
-    public Void visit(NasmJl inst){return null;}
-    public Void visit(NasmNot inst){return null;}
-    public Void visit(NasmPop inst){return null;}
-    public Void visit(NasmRet inst){return null;}
-    public Void visit(NasmXor inst){return null;}
-    public Void visit(NasmAnd inst){return null;}
-    public Void visit(NasmJg inst){return null;}
-    public Void visit(NasmJmp inst){return null;}
-    public Void visit(NasmMov inst){return null;}
-    public Void visit(NasmPush inst){return null;}
-    public Void visit(NasmSub inst){return null;}
-    public Void visit(NasmEmpty inst){return null;}
+    public Void visit(NasmAdd inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmCall inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        return null;
+    }
+    public Void visit(NasmDiv inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmJe inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmJle inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmJne inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmMul inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmOr inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmCmp inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmInst inst){
+        // TODO: Check
+        // visit(inst);
+        return null;
+    }
+    public Void visit(NasmJge inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmJl inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmNot inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmPop inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmRet inst){
+        if (nasm.listeInst.indexOf(inst) != nasm.listeInst.size() - 1)
+            addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmXor inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmAnd inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmJg inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmJmp inst){
+        addEdgeWithLabel(inst, (NasmLabel) inst.address);
+        return null;
+    }
+    public Void visit(NasmMov inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmPush inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmSub inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
+    public Void visit(NasmEmpty inst){
+        addEdgeWithInst(inst, getNextInst(inst));
+        return null;
+    }
 
-    public Void visit(NasmAddress operand){return null;}
+    public Void visit(NasmAddress operand){
+        return null;
+    }
     public Void visit(NasmConstant operand){return null;}
     public Void visit(NasmLabel operand){return null;}
     public Void visit(NasmRegister operand){return null;}
 
-
+    static class FgException extends RuntimeException {
+        FgException(String error) {
+            super(error);
+        }
+    }
 }
