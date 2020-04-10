@@ -10,8 +10,8 @@ public class ColorGraph {
     public  int            R;
     public  int            K;
     private Stack<Integer> pile;
-    public  IntSet         enleves;
-    public  IntSet         deborde;
+    public  IntSet         removed;
+    public  IntSet         spill;
     public  int[]          couleur;
     public  Node[]         int2Node;
     static  int            NOCOLOR = -1;
@@ -37,9 +37,15 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
     /* associe une couleur à tous les sommets se trouvant dans la pile */
     /*-------------------------------------------------------------------------------------------------------------*/
-    
+
     public void selection()
     {
+        while (!pile.empty()) {
+            int node = pile.pop();
+            if (couleursVoisins(node).getSize() != K)
+                couleur[node] = choisisCouleur(couleursVoisins(node));
+            // else ?
+        }
     }
     
     /*-------------------------------------------------------------------------------------------------------------*/
@@ -48,6 +54,15 @@ public class ColorGraph {
     
     public IntSet couleursVoisins(int t)
     {
+        IntSet colorOfNeighbours = new IntSet(K);
+        NodeList succ = int2Node[t].succ();
+        while (succ != null) {
+            int color = couleur[succ.head.mykey];
+            if (color != NOCOLOR && !colorOfNeighbours.isMember(color))
+                colorOfNeighbours.add(color);
+            succ = succ.tail;
+        }
+        return colorOfNeighbours;
     }
     
     /*-------------------------------------------------------------------------------------------------------------*/
@@ -56,6 +71,10 @@ public class ColorGraph {
     
     public int choisisCouleur(IntSet colorSet)
     {
+        for (int i=0 ; i<K ; i++)
+            if(!colorSet.isMember(i))
+                return i;
+        return NOCOLOR;
     }
     
     /*-------------------------------------------------------------------------------------------------------------*/
@@ -64,8 +83,25 @@ public class ColorGraph {
     
     public int nbVoisins(int t)
     {
+        int count = 0;
+        NodeList succ = int2Node[t].succ();
+        while (succ != null) {
+            if (removed.isMember(succ.head.mykey))
+                ++count; // TODO: Check
+            succ = succ.tail;
+        }
+        return count;
     }
 
+
+    private int nbOfPrecoloredRegisters() {
+        int count = 0;
+        for (int color : couleur)
+            if (color != NOCOLOR)
+                count++;
+
+        return count;
+    }
     /*-------------------------------------------------------------------------------------------------------------*/
     /* simplifie le graphe d'interférence g                                                                        */
     /* la simplification consiste à enlever du graphe les temporaires qui ont moins de k voisins                   */
@@ -75,13 +111,47 @@ public class ColorGraph {
 
     public int simplification()
     {
+        pile = new Stack<Integer>();
+        int nbNodesToCompute = R - nbOfPrecoloredRegisters();
+        boolean modif = true;
+        while (pile.size() != nbNodesToCompute && modif) {
+            modif = false;
+            for (int i=0 ; i < R ; i++) {
+                if (nbVoisins(i) < K && couleur[i] == NOCOLOR) {
+                    pile.push(i);
+                    // TODO: Remove i from S ?
+                    removed.add(i);
+                    modif = true;
+                }
+            }
+        }
+        return G.nodeCount() - removed.getSize(); // return nb of nodes still in the graph
     }
     
     /*-------------------------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------------------------*/
-    
+    private Queue<Integer> nodesToCompute() {
+        Queue<Integer> queue = new LinkedList<Integer>();
+        for (int i=0 ; i<R ; i++)
+            if (!(removed.isMember(i)))
+                queue.add(i);
+        return queue;
+    }
+
     public void debordement()
     {
+        if (!spill.isEmpty())
+            throw new IllegalStateException("Wrong call to debordement()");
+        Queue<Integer> nodesToCompute = nodesToCompute();
+        if (removed.getSize() + nodesToCompute.size() != R)
+            throw new IllegalStateException("Wrong number of nodes");
+        while (pile.size() != R) {
+            int node = nodesToCompute.remove();
+            pile.push(node);
+            removed.add(node);
+            spill.add(node);
+            simplification();
+        }
     }
 
 
