@@ -5,14 +5,19 @@
    <SaInstBloc>
     <SaLInst>
      <SaInstEcriture>
-      <SaExpInf>
+      <SaExpAdd>
+       <SaExpAdd>
+        <SaExpInt>
+         <val>3</val>
+        </SaExpInt>
+        <SaExpInt>
+         <val>10</val>
+        </SaExpInt>
+       </SaExpAdd>
        <SaExpInt>
-        <val>3</val>
+        <val>30</val>
        </SaExpInt>
-       <SaExpInt>
-        <val>10</val>
-       </SaExpInt>
-      </SaExpInf>
+      </SaExpAdd>
      </SaInstEcriture>
     </SaLInst>
    </SaInstBloc>

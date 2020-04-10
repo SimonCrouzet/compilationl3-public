@@ -8,16 +8,19 @@ import java.util.*;
 import java.io.*;
 
 public class Ig {
-	static final int K = 4;
+	static final int K = 4; // Number of colors set, corresponding to the number of registers available
 
     public Graph graph;
     public ColorGraph colorGraph;
     public FgSolution fgs;
     public int regNb;
     public Nasm nasm;
-    public Node int2Node[];
+    public Node[] int2Node;
 
-    
+	/**
+	 * Constructor of the interference graph
+	 * @param fgs the analytic graph solver provided
+	 */
     public Ig(FgSolution fgs){
 		this.fgs = fgs;
 		this.graph = new Graph();
@@ -27,7 +30,10 @@ public class Ig {
 		this.construction();
     }
 
-    public void construction(){
+	/**
+	 * Builder - Initialize all the nodes, and add all the edges (following the algorithm pseudocode)
+	 */
+	public void construction(){
 		initializeNodes();
 		for (NasmInst inst : nasm.listeInst) {
 			initializeEdges(fgs.in.get(inst));
@@ -35,12 +41,18 @@ public class Ig {
 		}
     }
 
-    private void initializeNodes() {
+	/**
+	 * Nodes initializer
+	 */
+	private void initializeNodes() {
 		for (int i=0 ; i<regNb ; i++)
 			graph.newNode();
 		int2Node = graph.nodeArray();
 	}
 
+	/**
+	 * Initialize the edges, referring to the provided IntSet
+	 */
 	private void initializeEdges(IntSet refSet) {
     	if (refSet.isEmpty())
     		return;
@@ -55,6 +67,14 @@ public class Ig {
 		}
 	}
 
+
+
+
+
+	/* ############ PRECOLORING ###################################################################################*/
+	/**
+	 * Set and return the precolored Temporaries
+	 */
     public int[] getPrecoloredTemporaries()
     {
     	int[] precoloredTemporaries = new int[graph.nodeCount()];
@@ -65,7 +85,10 @@ public class Ig {
     	return precoloredTemporaries;
     }
 
-    private void colorTemporary(NasmOperand op, int[] precoloredTemporaries) {
+	/**
+	 * Precolor the operand
+	 */
+	private void colorTemporary(NasmOperand op, int[] precoloredTemporaries) {
     	if (op == null)
     		return;
     	if (op instanceof NasmRegister)
@@ -76,6 +99,9 @@ public class Ig {
 		}
 	}
 
+	/**
+	 * Precolor the operand according to the NASM code
+	 */
 	private void getColor(NasmOperand op, int[] precoloredTemporaries) {
     	if (op == null || !(op instanceof NasmRegister))
     		return;
@@ -83,6 +109,16 @@ public class Ig {
     		precoloredTemporaries[((NasmRegister) op).val] = ((NasmRegister) op).color;
 	}
 
+
+
+
+
+
+	/* ############ COLORING ######################################################################################*/
+
+	/**
+	 * Color the operand according to the colors provided
+	 */
 	private void color(NasmOperand op, int[] colors) {
 		if (op == null || !(op instanceof NasmRegister))
 			return;
@@ -90,6 +126,9 @@ public class Ig {
 			((NasmRegister) op).colorRegister(colors[((NasmRegister) op).val]);
 	}
 
+	/**
+	 * Color the operand
+	 */
 	private void allocateColor(NasmOperand op, int[] colors) {
 		if (op == null)
 			return;
@@ -101,10 +140,11 @@ public class Ig {
 		}
 	}
 
+	/**
+	 * Register Allocater - color the register according to the colors provided by the ColorGraph
+	 */
     public void allocateRegisters(){
-    	System.out.println(Arrays.toString(getPrecoloredTemporaries()));
     	colorGraph = new ColorGraph(graph, K, getPrecoloredTemporaries());
-    	System.out.println(Arrays.toString(colorGraph.couleur));
     	for (NasmInst inst : nasm.listeInst) {
     		allocateColor(inst.source, colorGraph.couleur);
     		allocateColor(inst.destination, colorGraph.couleur);

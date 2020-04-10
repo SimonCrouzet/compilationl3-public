@@ -13,7 +13,12 @@ public class FgSolution{
     public Map< NasmInst, IntSet> def;
     public Map< NasmInst, IntSet> in;
     public Map< NasmInst, IntSet> out;
-    
+
+	/**
+	 * Constructor of the analytic graph solver
+	 * @param nasm the NASM code to analyze
+	 * @param fg the analytic graph to solve
+	 */
     public FgSolution(Nasm nasm, Fg fg){
 		this.nasm = nasm;
 		this.fg = fg;
@@ -22,19 +27,27 @@ public class FgSolution{
 		this.in =  new HashMap< NasmInst, IntSet>();
 		this.out = new HashMap< NasmInst, IntSet>();
 
+		// Compute Use & Def
 		for (NasmInst inst : nasm.listeInst)
 			initializeInst(inst);
 
+		// Compute In & Out
 		InOutAlgorithm();
     }
 
-    private void addRegisterNumberToSet(NasmRegister op, IntSet set) {
+	/**
+	 * Add a Register to an IntSet
+	 */
+	private void addRegisterNumberToSet(NasmRegister op, IntSet set) {
     	if (op.isGeneralRegister()) {
 			int value = ((NasmRegister) op).val;
 			set.add(value);
 		}
 	}
 
+	/**
+	 * Add an Address to an IntSet
+	 */
 	private void addAddressToSet(NasmAddress op, IntSet set) {
     	if (op.base instanceof NasmRegister)
     		addRegisterNumberToSet((NasmRegister) op.base, set);
@@ -42,6 +55,9 @@ public class FgSolution{
     		addRegisterNumberToSet((NasmRegister) op.offset, set);
 	}
 
+	/**
+	 * Add an Operand to an IntSet
+	 */
 	private void addOperandToSet(NasmOperand op, IntSet set) {
     	if (op instanceof NasmRegister)
     		addRegisterNumberToSet((NasmRegister) op, set);
@@ -49,6 +65,9 @@ public class FgSolution{
     		addAddressToSet((NasmAddress) op, set);
 	}
 
+	/**
+	 * Compute Use & Def from the instruction provided, using booleans provided by the inst
+	 */
     private void initializeInst(NasmInst inst) {
 		in.put(inst, new IntSet(nasm.getTempCounter()));
 		out.put(inst, new IntSet(nasm.getTempCounter()));
@@ -65,6 +84,9 @@ public class FgSolution{
 			addOperandToSet(inst.destination, use.get(inst));
 	}
 
+	/**
+	 * Compute In & Out algorithm according to the pseudocode
+	 */
 	private void InOutAlgorithm() {
 		for (NasmInst key : fg.inst2Node.keySet()) {
 			in.put(key, new IntSet(nasm.getTempCounter()));
@@ -82,14 +104,17 @@ public class FgSolution{
 			// TODO: Check if the values/addresses are correctly manipulated
 			++iterNum;
 			inOutDiffers = false;
-			// for (Map.Entry<NasmInst, Node> entry : fg.inst2Node.entrySet()) {
 			for (NasmInst inst : nasm.listeInst) {
+				// Store in' and out'
 				inPrime = in.get(inst).copy();
 				outPrime = out.get(inst).copy();
 
+				// Compute new In
 				newIn = use.get(inst).union(out.get(inst).minus(def.get(inst)));
 				in.put(inst, newIn);
 
+
+				// Compute new Out
 				newOut = new IntSet(nasm.getTempCounter());
 				NodeList succ = fg.inst2Node.get(inst).succ();
 				while (succ != null) {
@@ -98,6 +123,7 @@ public class FgSolution{
 				}
 				out.put(inst, newOut);
 
+				// Halt condition
 				if (!inPrime.equal(newIn) || !outPrime.equal(newOut))
 					inOutDiffers = true;
 			}
