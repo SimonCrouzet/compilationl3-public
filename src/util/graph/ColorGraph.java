@@ -9,6 +9,7 @@ public class ColorGraph {
     public  Graph          G;
     public  int            R;
     public  int            K;
+    private int            N;
     private Stack<Integer> pile;
     public  IntSet         removed;
     public  IntSet         spill;
@@ -17,21 +18,22 @@ public class ColorGraph {
     static  int            NOCOLOR = -1;
 
     public ColorGraph(Graph G, int K, int[] phi){
-	this.G       = G;
-	this.K       = K;
-	pile         = new Stack<Integer>(); 
-	R            = G.nodeCount();
-	couleur      = new int[R];
-	removed      = new IntSet(R);
-	spill        = new IntSet(R);
-	int2Node     = G.nodeArray();
-	for(int v=0; v < R; v++){
-	    int preColor = phi[v];
-	    if(preColor >= 0 && preColor < K)
-		couleur[v] = phi[v];
-	    else
-		couleur[v] = NOCOLOR;
-	}
+        this.G       = G;
+        this.K       = K;
+        pile         = new Stack<Integer>();
+        R            = G.nodeCount();
+        couleur      = new int[R];
+        removed      = new IntSet(R);
+        spill        = new IntSet(R);
+        int2Node     = G.nodeArray();
+        for(int v=0; v < R; v++){
+            int preColor = phi[v];
+            if(preColor >= 0 && preColor < K)
+            couleur[v] = phi[v];
+            else
+            couleur[v] = NOCOLOR;
+        }
+        coloration();
     }
 
     /*-------------------------------------------------------------------------------------------------------------*/
@@ -40,10 +42,19 @@ public class ColorGraph {
 
     public void selection()
     {
-        while (!pile.empty()) {
+        while (!pile.isEmpty()) {
+            System.out.println("here");
             int node = pile.pop();
-            if (couleursVoisins(node).getSize() != K)
-                couleur[node] = choisisCouleur(couleursVoisins(node));
+            // if (couleursVoisins(node).getSize() != K)
+            // if (couleur[node] != NOCOLOR)
+            if (node == 3) {
+                System.out.println("WARN! " + couleur[node]);
+                System.out.println("NBVOISINS: " + nbVoisins(node));
+            }
+            couleur[node] = choisisCouleur(couleursVoisins(node));
+            if (node == 3) {
+                System.out.println("End! " + couleur[node]);
+            }
             // else ?
         }
     }
@@ -58,7 +69,8 @@ public class ColorGraph {
         NodeList succ = int2Node[t].succ();
         while (succ != null) {
             int color = couleur[succ.head.mykey];
-            if (color != NOCOLOR && !colorOfNeighbours.isMember(color))
+            // if (color != NOCOLOR && !colorOfNeighbours.isMember(color))
+            if (color != NOCOLOR)
                 colorOfNeighbours.add(color);
             succ = succ.tail;
         }
@@ -71,9 +83,10 @@ public class ColorGraph {
     
     public int choisisCouleur(IntSet colorSet)
     {
-        for (int i=0 ; i<K ; i++)
-            if(!colorSet.isMember(i))
+        for (int i=0 ; i<K ; i++) {
+            if (!colorSet.isMember(i))
                 return i;
+        }
         return NOCOLOR;
     }
     
@@ -86,8 +99,8 @@ public class ColorGraph {
         int count = 0;
         NodeList succ = int2Node[t].succ();
         while (succ != null) {
-            if (removed.isMember(succ.head.mykey))
-                ++count; // TODO: Check
+            if (!(removed.isMember(succ.head.mykey)))
+                ++count;
             succ = succ.tail;
         }
         return count;
@@ -111,15 +124,15 @@ public class ColorGraph {
 
     public int simplification()
     {
-        pile = new Stack<Integer>();
         int nbNodesToCompute = R - nbOfPrecoloredRegisters();
         boolean modif = true;
-        while (pile.size() != nbNodesToCompute && modif) {
+        while (pile.size() != N && modif) {
             modif = false;
             for (int i=0 ; i < R ; i++) {
+                if (removed.isMember(i))
+                    continue;
                 if (nbVoisins(i) < K && couleur[i] == NOCOLOR) {
                     pile.push(i);
-                    // TODO: Remove i from S ?
                     removed.add(i);
                     modif = true;
                 }
@@ -138,15 +151,29 @@ public class ColorGraph {
         return queue;
     }
 
+    private int chooseNode() {
+        for (int i=0 ; i<R ; i++)
+            if ((!pile.contains(i)))
+                return i;
+        return -1;
+    }
+
     public void debordement()
     {
         if (!spill.isEmpty())
             throw new IllegalStateException("Wrong call to debordement()");
-        Queue<Integer> nodesToCompute = nodesToCompute();
-        if (removed.getSize() + nodesToCompute.size() != R)
-            throw new IllegalStateException("Wrong number of nodes");
+        /*Queue<Integer> nodesToCompute = nodesToCompute();
+        if (pile.size() + nodesToCompute.size() != R)
+            throw new IllegalStateException("Wrong number of nodes (" + R + ")" + (pile.size() + nodesToCompute.size()));
         while (pile.size() != R) {
             int node = nodesToCompute.remove();
+            pile.push(node);
+            removed.add(node);
+            spill.add(node);
+            simplification();
+        }*/
+        while (pile.size() != R) {
+            int node = chooseNode();
             pile.push(node);
             removed.add(node);
             spill.add(node);
@@ -160,9 +187,10 @@ public class ColorGraph {
 
     public void coloration()
     {
-	this.simplification();
-	this.debordement();
-	this.selection();
+        N = R - nbOfPrecoloredRegisters();
+        this.simplification();
+        this.debordement();
+        this.selection();
     }
 
     void affiche()
