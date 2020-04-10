@@ -30,7 +30,6 @@ public class Fg implements NasmVisitor <Void> {
             inst2Node.put(inst, newNode);
             node2Inst.put(newNode, inst);
             if (inst.label != null) {
-                // TODO: Check cast
                 NasmLabel label = (NasmLabel) inst.label;
                 label2Inst.put(label.toString(), inst);
             }
@@ -39,14 +38,12 @@ public class Fg implements NasmVisitor <Void> {
 
     private void initializeEdges() {
         for (NasmInst inst : nasm.listeInst) {
-            // TODO: Raise exceptions?
             if (inst.source == null || inst.destination == null)
                 return;
             Node from = inst2Node.get(label2Inst.get(inst.source.toString()));
             Node to = inst2Node.get(label2Inst.get(inst.destination.toString()));
             if (from == null || to == null)
                 return;
-            // TODO: Revenir là-dessus !
             graph.addEdge(from, to);
         }
     }

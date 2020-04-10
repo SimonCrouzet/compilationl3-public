@@ -71,15 +71,14 @@ public class FgSolution{
 			out.put(key, new IntSet(nasm.getTempCounter()));
 		}
 
-		// Needed for the do...while statement
     	IntSet inPrime;
     	IntSet outPrime;
     	IntSet newIn;
     	IntSet newOut;
+		// Needed for the do...while statement
 		boolean inOutDiffers = false;
 
     	do {
-    		// TODO: Halt of the algorithm???
 			// TODO: Check if the values/addresses are correctly manipulated
 			++iterNum;
 			inOutDiffers = false;
@@ -88,17 +87,12 @@ public class FgSolution{
 				inPrime = in.get(inst).copy();
 				outPrime = out.get(inst).copy();
 
-				System.out.println("Key " + inst.toString());
-				System.out.println("Use " + use.get(inst));
-				System.out.println("Def " + def.get(inst));
-
 				newIn = use.get(inst).union(out.get(inst).minus(def.get(inst)));
 				in.put(inst, newIn);
 
 				newOut = new IntSet(nasm.getTempCounter());
 				NodeList succ = fg.inst2Node.get(inst).succ();
 				while (succ != null) {
-					System.out.println("Node " + succ.head);
 					newOut = newOut.union(in.get(fg.node2Inst.get(succ.head)));
 					succ = succ.tail;
 				}
