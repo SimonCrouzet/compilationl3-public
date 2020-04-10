@@ -12,6 +12,10 @@ class TreeType(Enum):
     C3A = '.c3a'
     C3AOUT = '.c3aout'
     PRENASM = '.pre-nasm'
+    FG = '.fg'
+    FGSOL = '.fgs'
+    NASM = '.nasm'
+    OUT = '.out'
 
 
 class CompareTree:
@@ -30,6 +34,12 @@ class CompareTree:
         if self.treeType is TreeType.C3A:
             return input_line.split('#')[0]
         if self.treeType is TreeType.PRENASM:
+            return input_line.split(';')[0]
+        if self.treeType is TreeType.FG:
+            return input_line.split(';')[0]
+        if self.treeType is TreeType.FGSOL:
+            return input_line.split(';')[0]
+        if self.treeType is TreeType.NASM:
             return input_line.split(';')[0]
         else:
             return input_line
@@ -68,6 +78,10 @@ def main():
     dict_directories[TreeType.C3A] = Path(root).joinpath('c3a-ref')
     dict_directories[TreeType.C3AOUT] = Path(root).joinpath('c3aout-ref')
     dict_directories[TreeType.PRENASM] = Path(root).joinpath('prenasm-ref')
+    dict_directories[TreeType.FG] = Path(root).joinpath('fg-ref')
+    dict_directories[TreeType.FGSOL] = Path(root).joinpath('fgs-ref')
+    dict_directories[TreeType.NASM] = Path(root).joinpath('nasm-ref')
+    dict_directories[TreeType.OUT] = Path(root).joinpath('out-ref')
     dict_instances = {}
     dict_instances[TreeType.SA] = CompareTree(given_type='.sa', input_directory=input_directory, dict_directories=dict_directories)
     dict_instances[TreeType.TS] = CompareTree(given_type='.ts', input_directory=input_directory,
@@ -80,6 +94,14 @@ def main():
                                               dict_directories=dict_directories)
     dict_instances[TreeType.PRENASM] = CompareTree(given_type='.pre-nasm', input_directory=input_directory,
                                               dict_directories=dict_directories)
+    dict_instances[TreeType.FG] = CompareTree(given_type='.fg', input_directory=input_directory,
+                                                   dict_directories=dict_directories)
+    dict_instances[TreeType.FGSOL] = CompareTree(given_type='.fgs', input_directory=input_directory,
+                                                   dict_directories=dict_directories)
+    dict_instances[TreeType.NASM] = CompareTree(given_type='.nasm', input_directory=input_directory,
+                                                   dict_directories=dict_directories)
+    dict_instances[TreeType.OUT] = CompareTree(given_type='.out', input_directory=input_directory,
+                                                   dict_directories=dict_directories)
     file_results = open(Path(root).joinpath('compare_results.txt'), 'w')
     nb_errors = 0
 
