@@ -45,11 +45,8 @@ public class FgSolution{
 	private void addOperandToSet(NasmOperand op, IntSet set) {
     	if (op instanceof NasmRegister)
     		addRegisterNumberToSet((NasmRegister) op, set);
-    	else if (op instanceof NasmAddress)
+    	if (op instanceof NasmAddress)
     		addAddressToSet((NasmAddress) op, set);
-    	// TODO: Throw exception here?
-		else
-			throw new Fg.FgException("ERROR: Operand is not valid (register or address");
 	}
 
     private void initializeInst(NasmInst inst) {
@@ -58,7 +55,7 @@ public class FgSolution{
 		def.put(inst, new IntSet(nasm.getTempCounter()));
 		use.put(inst, new IntSet(nasm.getTempCounter()));
 
-		if (inst.srcDef)
+		 if (inst.srcDef)
 			addOperandToSet(inst.source, use.get(inst));
 		if (inst.srcUse)
 			addOperandToSet(inst.source, use.get(inst));
@@ -75,29 +72,42 @@ public class FgSolution{
 		}
 
 		// Needed for the do...while statement
-    	IntSet inPrime = new IntSet(nasm.getTempCounter());
-    	IntSet outPrime = new IntSet(nasm.getTempCounter());
-    	IntSet newIn = new IntSet(nasm.getTempCounter());
-    	IntSet newOut = new IntSet(nasm.getTempCounter());
+    	IntSet inPrime;
+    	IntSet outPrime;
+    	IntSet newIn;
+    	IntSet newOut;
+		boolean inOutDiffers = false;
 
     	do {
     		// TODO: Halt of the algorithm???
 			// TODO: Check if the values/addresses are correctly manipulated
-			for (Map.Entry<NasmInst, Node> entry : fg.inst2Node.entrySet()) {
-				inPrime = in.get(entry.getKey()).copy();
-				outPrime = out.get(entry.getKey()).copy();
+			++iterNum;
+			inOutDiffers = false;
+			// for (Map.Entry<NasmInst, Node> entry : fg.inst2Node.entrySet()) {
+			for (NasmInst inst : nasm.listeInst) {
+				inPrime = in.get(inst).copy();
+				outPrime = out.get(inst).copy();
 
-				newIn = use.get(entry.getKey()).union(out.get(entry.getKey()).minus(def.get(entry.getKey())));
-				in.put(entry.getKey(), newIn);
+				System.out.println("Key " + inst.toString());
+				System.out.println("Use " + use.get(inst));
+				System.out.println("Def " + def.get(inst));
 
-				NodeList succ = entry.getValue().succ();
+				newIn = use.get(inst).union(out.get(inst).minus(def.get(inst)));
+				in.put(inst, newIn);
+
+				newOut = new IntSet(nasm.getTempCounter());
+				NodeList succ = fg.inst2Node.get(inst).succ();
 				while (succ != null) {
+					System.out.println("Node " + succ.head);
 					newOut = newOut.union(in.get(fg.node2Inst.get(succ.head)));
 					succ = succ.tail;
 				}
-				out.put(entry.getKey(), newOut);
+				out.put(inst, newOut);
+
+				if (!inPrime.equal(newIn) || !outPrime.equal(newOut))
+					inOutDiffers = true;
 			}
-		} while (!inPrime.equal(newIn) || !outPrime.equal(newOut));
+		} while (inOutDiffers);
 	}
     
     public void affiche(String baseFileName){
