@@ -10,6 +10,7 @@ public class Fg implements NasmVisitor <Void> {
     Map< NasmInst, Node> inst2Node;
     Map< Node, NasmInst> node2Inst;
     Map< String, NasmInst> label2Inst;
+    private ArrayList<String> systemCalls = new ArrayList<String>(Arrays.asList("iprintLF", "readline", "atoi"));
 
     public Fg(Nasm nasm){
 	this.nasm = nasm;
@@ -18,8 +19,9 @@ public class Fg implements NasmVisitor <Void> {
 	this.label2Inst = new HashMap< String, NasmInst>();
 	this.graph = new Graph();
 
-    initializeNodes();
-    initializeEdges();
+    initializeNodes(); // initializeEdges();
+    for (NasmInst inst : nasm.listeInst)
+        inst.accept(this);
     }
 
     private void initializeNodes() {
@@ -62,6 +64,10 @@ public class Fg implements NasmVisitor <Void> {
     private void addEdgeWithLabel(NasmInst source, NasmLabel destination) {
         if (source == null || destination == null)
             throw new FgException("ERROR: Can't create an edge without a source and a destination");
+
+        if (systemCalls.contains(destination.toString()))
+            return; // System call: iprintLF, readline or atoi. No edge needed
+
         NasmInst destinationInst = label2Inst.get(destination.toString());
         if (destinationInst == null)
             throw new FgException("ERROR: No instruction matching with the given label");
@@ -74,7 +80,7 @@ public class Fg implements NasmVisitor <Void> {
         int instIndex = nasm.listeInst.indexOf(previousInst);
         if (instIndex == -1)
             throw new FgException("ERROR: Instruction doesn't appear on the NASM");
-        if (instIndex == nasm.listeInst.size())
+        if (instIndex == nasm.listeInst.size() - 1)
             throw new FgException("ERROR: No next instruction");
         return nasm.listeInst.get(instIndex + 1);
     }
@@ -146,8 +152,9 @@ public class Fg implements NasmVisitor <Void> {
         return null;
     }
     public Void visit(NasmInst inst){
-        // TODO: Check
-        // visit(inst);
+        // Case NasmInt
+        if (nasm.listeInst.indexOf(inst) != nasm.listeInst.size() - 1)
+            addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
     public Void visit(NasmJge inst){
@@ -213,6 +220,8 @@ public class Fg implements NasmVisitor <Void> {
     public Void visit(NasmConstant operand){return null;}
     public Void visit(NasmLabel operand){return null;}
     public Void visit(NasmRegister operand){return null;}
+
+
 
     static class FgException extends RuntimeException {
         FgException(String error) {
