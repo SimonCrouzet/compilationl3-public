@@ -53,8 +53,8 @@ public class ColorGraph {
     {
         while (!pile.isEmpty()) {
             int node = pile.pop();
-            if (couleursVoisins(node).getSize() != K)
-                couleur[node] = choisisCouleur(couleursVoisins(node));
+            // if (couleursVoisins(node).getSize() != K)
+            couleur[node] = choisisCouleur(couleursVoisins(node));
             // else ?
         }
     }
@@ -73,7 +73,7 @@ public class ColorGraph {
         NodeList succ = int2Node[t].succ();
         while (succ != null) {
             int color = couleur[succ.head.mykey];
-            if (color != NOCOLOR && !colorOfNeighbours.isMember(color))
+            if (color != NOCOLOR)
                 colorOfNeighbours.add(color);
             succ = succ.tail;
         }
