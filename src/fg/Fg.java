@@ -18,7 +18,8 @@ public class Fg implements NasmVisitor <Void> {
 	this.label2Inst = new HashMap< String, NasmInst>();
 	this.graph = new Graph();
 
-
+    initializeNodes();
+    initializeEdges();
     }
 
     private void initializeNodes() {
