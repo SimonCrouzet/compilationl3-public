@@ -10,26 +10,32 @@
        <AInstrwrite>
         <ASimpleExpr>
          <ASimpleExprOu>
-          <AInfExprEt>
-           <ASimpleExprEt>
-            <ASimpleExprEgal>
+          <ASimpleExprEt>
+           <APlusExprEgal>
+            <APlusExprEgal>
+             <ASimpleExprEgal>
+              <ASimpleExprPlus>
+               <ASimpleExprMult>
+                <ANombreExprComplete>
+                </ANombreExprComplete>
+               </ASimpleExprMult>
+              </ASimpleExprPlus>
+             </ASimpleExprEgal>
              <ASimpleExprPlus>
               <ASimpleExprMult>
                <ANombreExprComplete>
                </ANombreExprComplete>
               </ASimpleExprMult>
              </ASimpleExprPlus>
-            </ASimpleExprEgal>
-           </ASimpleExprEt>
-           <ASimpleExprEgal>
+            </APlusExprEgal>
             <ASimpleExprPlus>
              <ASimpleExprMult>
               <ANombreExprComplete>
               </ANombreExprComplete>
              </ASimpleExprMult>
             </ASimpleExprPlus>
-           </ASimpleExprEgal>
-          </AInfExprEt>
+           </APlusExprEgal>
+          </ASimpleExprEt>
          </ASimpleExprOu>
         </ASimpleExpr>
        </AInstrwrite>

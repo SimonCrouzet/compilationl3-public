@@ -1,5 +1,5 @@
 main()
 {
-ecrire(3 < 10);
+ecrire(3 + 10 + 30);
 }
 

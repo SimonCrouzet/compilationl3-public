@@ -9,6 +9,9 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Custom JUnit tests written to compute all .l files provided, to test the grammar (TP1)
+ */
 class CompilerTest {
     ArrayList<String> listOfFiles;
 
@@ -35,6 +38,5 @@ class CompilerTest {
                 Compiler.main(args);
             }
         }
-        //Compiler.main("test/input/add1.l");
     }
 }

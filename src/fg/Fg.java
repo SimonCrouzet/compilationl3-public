@@ -12,6 +12,10 @@ public class Fg implements NasmVisitor <Void> {
     Map< String, NasmInst> label2Inst;
     private ArrayList<String> systemCalls = new ArrayList<String>(Arrays.asList("iprintLF", "readline", "atoi"));
 
+    /**
+     * Constructor of the analytic graph
+     * @param nasm the NASM code to analyze
+     */
     public Fg(Nasm nasm){
 	this.nasm = nasm;
 	this.inst2Node = new HashMap< NasmInst, Node>();
@@ -19,11 +23,14 @@ public class Fg implements NasmVisitor <Void> {
 	this.label2Inst = new HashMap< String, NasmInst>();
 	this.graph = new Graph();
 
-    initializeNodes(); // initializeEdges();
+    initializeNodes();
     for (NasmInst inst : nasm.listeInst)
         inst.accept(this);
     }
 
+    /**
+     * Creation of the set of nodes, from the nasm instructions
+     */
     private void initializeNodes() {
         for (NasmInst inst : nasm.listeInst) {
             Node newNode = graph.newNode();
@@ -36,6 +43,9 @@ public class Fg implements NasmVisitor <Void> {
         }
     }
 
+    /**
+     * Creation of the set of edges (DEPRECATED)
+     */
     private void initializeEdges() {
         for (NasmInst inst : nasm.listeInst) {
             if (inst.source == null || inst.destination == null)
@@ -48,6 +58,12 @@ public class Fg implements NasmVisitor <Void> {
         }
     }
 
+    /**
+     * Add an Edge between two instructions
+     * @param source
+     * @param destination
+     * @throws FgException if source or destination are not valid
+     */
     private void addEdgeWithInst(NasmInst source, NasmInst destination) {
         if (source == null || destination == null)
             throw new FgException("ERROR: Can't create an edge without a source and a destination");
@@ -58,6 +74,13 @@ public class Fg implements NasmVisitor <Void> {
         graph.addEdge(from, to);
     }
 
+    /**
+     * Add an Edge between an instruction and a label.
+     * N.B: labels corresponding to system calls are skipped
+     * @param source
+     * @param destination
+     * @throws FgException if source is not valid or if destination doesn't exist
+     */
     private void addEdgeWithLabel(NasmInst source, NasmLabel destination) {
         if (source == null || destination == null)
             throw new FgException("ERROR: Can't create an edge without a source and a destination");
@@ -71,6 +94,12 @@ public class Fg implements NasmVisitor <Void> {
         addEdgeWithInst(source, destinationInst);
     }
 
+    /**
+     * Get the next instruction
+     * @param previousInst
+     * @return instruction which is following the instruction passed by parameter
+     * @throws FgException if parameter is not valid, or if the instruction passed is the last one on the NASM code
+     */
     private NasmInst getNextInst(NasmInst previousInst) {
         if (previousInst == null)
             throw new FgException("ERROR: Need previous instruction to find the next one");
@@ -108,109 +137,203 @@ public class Fg implements NasmVisitor <Void> {
 	    out.println(")\t" + nasmInst);
 	}
     }
-    
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmAdd inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmCall inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmDiv inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Complex inst: conditional jump
+     */
     public Void visit(NasmJe inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Complex inst: conditional jump
+     */
     public Void visit(NasmJle inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Complex inst: conditional jump
+     */
     public Void visit(NasmJne inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmMul inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmOr inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmCmp inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst. Should be the case 'NasmInt'
+     */
     public Void visit(NasmInst inst){
         // Case NasmInt
         if (nasm.listeInst.indexOf(inst) != nasm.listeInst.size() - 1)
             addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Complex inst: conditional jump
+     */
     public Void visit(NasmJge inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Complex inst: conditional jump
+     */
     public Void visit(NasmJl inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmNot inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmPop inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst, add edge only if it's not the final return
+     */
     public Void visit(NasmRet inst){
         if (nasm.listeInst.indexOf(inst) != nasm.listeInst.size() - 1)
             addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmXor inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmAnd inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Complex inst: conditional jump
+     */
     public Void visit(NasmJg inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmJmp inst){
         addEdgeWithLabel(inst, (NasmLabel) inst.address);
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmMov inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmPush inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmSub inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
+
+    /**
+     * Simple inst
+     */
     public Void visit(NasmEmpty inst){
         addEdgeWithInst(inst, getNextInst(inst));
         return null;
     }
 
+    /**
+     * NasmOperand: no edge needed
+     */
     public Void visit(NasmAddress operand){
         return null;
     }
@@ -221,6 +344,10 @@ public class Fg implements NasmVisitor <Void> {
 
 
     static class FgException extends RuntimeException {
+        /**
+         * Custom Exception (clearer)
+         * @param error the message to send while raising the exception
+         */
         FgException(String error) {
             super(error);
         }

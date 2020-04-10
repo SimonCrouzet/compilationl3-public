@@ -17,6 +17,12 @@ public class ColorGraph {
     public  Node[]         int2Node;
     static  int            NOCOLOR = -1;
 
+    /**
+     * Constructor of the colored graph
+     * @param G the graph referenced
+     * @param K the number of colors available
+     * @param phi the colors presets by the pre-NASM code
+     */
     public ColorGraph(Graph G, int K, int[] phi){
         this.G       = G;
         this.K       = K;
@@ -40,21 +46,15 @@ public class ColorGraph {
     /* associe une couleur à tous les sommets se trouvant dans la pile */
     /*-------------------------------------------------------------------------------------------------------------*/
 
+    /**
+     * Selection algorithm, according to the pseudocode provided
+     */
     public void selection()
     {
         while (!pile.isEmpty()) {
-            System.out.println("here");
             int node = pile.pop();
-            // if (couleursVoisins(node).getSize() != K)
-            // if (couleur[node] != NOCOLOR)
-            if (node == 3) {
-                System.out.println("WARN! " + couleur[node]);
-                System.out.println("NBVOISINS: " + nbVoisins(node));
-            }
-            couleur[node] = choisisCouleur(couleursVoisins(node));
-            if (node == 3) {
-                System.out.println("End! " + couleur[node]);
-            }
+            if (couleursVoisins(node).getSize() != K)
+                couleur[node] = choisisCouleur(couleursVoisins(node));
             // else ?
         }
     }
@@ -62,15 +62,18 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
     /* récupère les couleurs des voisins de t */
     /*-------------------------------------------------------------------------------------------------------------*/
-    
+
+    /**
+     * Explore the colors already required by the neighbours
+     * @return the IntSet of non-available colors
+     */
     public IntSet couleursVoisins(int t)
     {
         IntSet colorOfNeighbours = new IntSet(K);
         NodeList succ = int2Node[t].succ();
         while (succ != null) {
             int color = couleur[succ.head.mykey];
-            // if (color != NOCOLOR && !colorOfNeighbours.isMember(color))
-            if (color != NOCOLOR)
+            if (color != NOCOLOR && !colorOfNeighbours.isMember(color))
                 colorOfNeighbours.add(color);
             succ = succ.tail;
         }
@@ -80,7 +83,11 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
     /* recherche une couleur absente de colorSet */
     /*-------------------------------------------------------------------------------------------------------------*/
-    
+
+    /**
+     * Choose the color within the available ones
+     * @return the color chosen, or NOCOLOR if any color available
+     */
     public int choisisCouleur(IntSet colorSet)
     {
         for (int i=0 ; i<K ; i++) {
@@ -93,7 +100,10 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
     /* calcule le nombre de voisins du sommet t */
     /*-------------------------------------------------------------------------------------------------------------*/
-    
+
+    /**
+     * Count and return the number of neighbours
+     */
     public int nbVoisins(int t)
     {
         int count = 0;
@@ -106,7 +116,9 @@ public class ColorGraph {
         return count;
     }
 
-
+    /**
+     * Count and return the precolored registers
+     */
     private int nbOfPrecoloredRegisters() {
         int count = 0;
         for (int color : couleur)
@@ -122,6 +134,10 @@ public class ColorGraph {
     /* à la fin du processus, le graphe peut ne pas être vide, il s'agit des temporaires qui ont au moins k voisin */
     /*-------------------------------------------------------------------------------------------------------------*/
 
+    /**
+     * Simplification algorithm, according to the pseudocode provided
+     * @return nb of nodes still in the graph (DEPRECATED)
+     */
     public int simplification()
     {
         int nbNodesToCompute = R - nbOfPrecoloredRegisters();
@@ -138,11 +154,15 @@ public class ColorGraph {
                 }
             }
         }
-        return G.nodeCount() - removed.getSize(); // return nb of nodes still in the graph
+        return G.nodeCount() - removed.getSize();
     }
     
     /*-------------------------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------------------------*/
+
+    /**
+     * List and return the node to compute (DEPRECATED)
+     */
     private Queue<Integer> nodesToCompute() {
         Queue<Integer> queue = new LinkedList<Integer>();
         for (int i=0 ; i<R ; i++)
@@ -151,6 +171,9 @@ public class ColorGraph {
         return queue;
     }
 
+    /**
+     * Pick and return the next node to compute
+     */
     private int chooseNode() {
         for (int i=0 ; i<R ; i++)
             if ((!pile.contains(i)))
@@ -158,20 +181,13 @@ public class ColorGraph {
         return -1;
     }
 
+    /**
+     * Spillover algorithm, according to the pseudocode provided
+     */
     public void debordement()
     {
         if (!spill.isEmpty())
             throw new IllegalStateException("Wrong call to debordement()");
-        /*Queue<Integer> nodesToCompute = nodesToCompute();
-        if (pile.size() + nodesToCompute.size() != R)
-            throw new IllegalStateException("Wrong number of nodes (" + R + ")" + (pile.size() + nodesToCompute.size()));
-        while (pile.size() != R) {
-            int node = nodesToCompute.remove();
-            pile.push(node);
-            removed.add(node);
-            spill.add(node);
-            simplification();
-        }*/
         while (pile.size() != R) {
             int node = chooseNode();
             pile.push(node);
@@ -185,6 +201,9 @@ public class ColorGraph {
     /*-------------------------------------------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------------------------------------------*/
 
+    /**
+     * Coloration of the registers
+     */
     public void coloration()
     {
         N = R - nbOfPrecoloredRegisters();
