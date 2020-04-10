@@ -1,6 +1,6 @@
-import sc.parser.*;
-import sc.lexer.*;
-import sc.node.*;
+import lcompil.parser.*;
+import lcompil.lexer.*;
+import lcompil.node.*;
 import java.io.*;
 import sa.*;
 import ts.*;
@@ -28,14 +28,14 @@ public class Compiler
 	}
 	catch (IOException e) {
 	    e.printStackTrace();
-	} 
+	}
 	try {
 	    // Create a Parser instance.
 	    Parser p = new Parser(new Lexer(br));
 	    // Parse the input.
 	    System.out.print("[BUILD SC] ");
 	    Start tree = p.parse();
-	    
+
 	    System.out.println("[PRINT SC]");
 	    tree.apply(new Sc2Xml(baseName));
 
@@ -46,7 +46,7 @@ public class Compiler
 
 	    System.out.println("[PRINT SA]");
 	    new Sa2Xml(saRoot, baseName);
-		    
+
 	    System.out.print("[BUILD TS] ");
 	    Ts table = new Sa2ts(saRoot).getTableGlobale();
 
@@ -97,6 +97,7 @@ public class Compiler
 	}
 	catch(Exception e){
 	    System.out.println(e.getMessage());
+	    e.printStackTrace();
 	    System.exit(1);
 	}
     }
