@@ -8,6 +8,76 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	add1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	3	;
+	REF: 7 : ( 8 )		mov	r0,	3	;
+
+	INPUT: 8 : ( )		add	r0,	10	;
+	REF: 8 : ( 9 )		add	r0,	10	;
+
+	INPUT: 9 : ( )		mov	eax,	r0	;Write
+	REF: 9 : ( 10 )		mov	eax,	r0	;Write 1
+
+	INPUT: 10 : ( )		call	iprintLF	;
+	REF: 10 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 11 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 11 : ( 12 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 12 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 12 : ( 13 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 13
+------------------------------------------------------------------------------------------------------------
+
+
+#############	add1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	3	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	3	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		add	r0,	10	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		add	r0,	10	;
+
+	INPUT: use = (0 ) def = (3 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write
+	REF: use = (0 ) def = (3 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 7
+------------------------------------------------------------------------------------------------------------
+
+
 #############	add1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -35,6 +105,88 @@ nb error in file: 0
 
 #############	add2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	add2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	3	;
+	REF: 7 : ( 8 )		mov	r0,	3	;
+
+	INPUT: 8 : ( )		add	r0,	10	;
+	REF: 8 : ( 9 )		add	r0,	10	;
+
+	INPUT: 9 : ( )		mov	r1,	r0	;
+	REF: 9 : ( 10 )		mov	r1,	r0	;
+
+	INPUT: 10 : ( )		add	r1,	30	;
+	REF: 10 : ( 11 )		add	r1,	30	;
+
+	INPUT: 11 : ( )		mov	eax,	r1	;Write
+	REF: 11 : ( 12 )		mov	eax,	r1	;Write 1
+
+	INPUT: 12 : ( )		call	iprintLF	;
+	REF: 12 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 13 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 13 : ( 14 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 14 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 14 : ( 15 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 15
+------------------------------------------------------------------------------------------------------------
+
+
+#############	add2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	3	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	3	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		add	r0,	10	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		add	r0,	10	;
+
+	INPUT: use = (0 ) def = (1 )	in = (0 )	 	out = ()	 		mov	r1,	r0	;
+	REF: use = (0 ) def = (1 )	in = (0 )	 	out = (1 )	 		mov	r1,	r0	;
+
+	INPUT: use = (1 ) def = (1 )	in = (1 )	 	out = ()	 		add	r1,	30	;
+	REF: use = (1 ) def = (1 )	in = (1 )	 	out = (1 )	 		add	r1,	30	;
+
+	INPUT: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 9
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -68,6 +220,67 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	affect.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	dword [a],	123	;Affect
+	REF: 7 : ( 8 )		mov	dword [a],	123	;Affect
+
+	INPUT: 8 : ( )		mov	eax,	dword [a]	;Write
+	REF: 8 : ( 9 )		mov	eax,	dword [a]	;Write 1
+
+	INPUT: 9 : ( )		call	iprintLF	;
+	REF: 9 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 10 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 10 : ( 11 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 11 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 11 : ( 12 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 12
+------------------------------------------------------------------------------------------------------------
+
+
+#############	affect.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 1
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (0 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	dword [a]	;Write
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	dword [a]	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 5
+------------------------------------------------------------------------------------------------------------
+
+
 #############	affect.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -95,6 +308,127 @@ nb error in file: 0
 
 #############	appel.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	appel.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 13 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	procedure :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	procedure :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	dword [ebp+4*4]	;
+	REF: 7 : ( 8 )		mov	r0,	dword [ebp+4*4]	;
+
+	INPUT: 8 : ( )		add	r0,	dword [ebp+4*3]	;
+	REF: 8 : ( 9 )		add	r0,	dword [ebp+4*3]	;
+
+	INPUT: 9 : ( )		mov	dword [ebp+4*2],	r0	;Return
+	REF: 9 : ( 10 )		mov	dword [ebp+4*2],	r0	;ecriture de la valeur de retour
+
+	INPUT: 10 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 10 : ( 11 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 11 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 11 : ( 12 )		pop	ebp	;restaure la valeur de ebp
+
+	INPUT: 12 : ( )		ret	;
+	REF: 12 : ( 13 )		ret	;
+
+	INPUT: 13 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 13 : ( 14 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 14 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 14 : ( 15 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 15 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 15 : ( 16 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 16 : ( )		push	1	;Param
+	REF: 16 : ( 17 )		push	1	;Param
+
+	INPUT: 17 : ( )		push	2	;Param
+	REF: 17 : ( 18 )		push	2	;Param
+
+	INPUT: 18 : ( )		sub	esp,	4	;Call
+	REF: 18 : ( 19 )		sub	esp,	4	;allocation mémoire pour la valeur de retour
+
+	INPUT: 19 : ( )		call	procedure	;
+	REF: 19 : ( 4 )		call	procedure	;
+
+	INPUT: 20 : ( )		pop	r1	;
+	REF: 20 : ( 21 )		pop	r1	;récupération de la valeur de retour
+
+	INPUT: 21 : ( )		add	esp,	8	;
+	REF: 21 : ( 22 )		add	esp,	8	;désallocation des arguments
+
+	INPUT: 22 : ( )		mov	eax,	r1	;Write
+	REF: 22 : ( 23 )		mov	eax,	r1	;Write 1
+
+	INPUT: 23 : ( )		call	iprintLF	;
+	REF: 23 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 24 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 24 : ( 25 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 25 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 25 : ( 26 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 26
+------------------------------------------------------------------------------------------------------------
+
+
+#############	appel.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 5
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	dword [ebp+4*4]	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	dword [ebp+4*4]	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		add	r0,	dword [ebp+4*3]	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		add	r0,	dword [ebp+4*3]	;
+
+	INPUT: use = (0 ) def = ()	in = (0 )	 	out = ()	 		mov	dword [ebp+4*2],	r0	;Return
+	REF: use = (0 ) def = ()	in = (0 )	 	out = ()	 		mov	dword [ebp+4*2],	r0	;ecriture de la valeur de retour
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	4	;Call
+	REF: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	4	;allocation mémoire pour la valeur de retour
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		pop	r1	;
+	REF: use = () def = (1 )	in = ()	 	out = (1 )	 		pop	r1	;récupération de la valeur de retour
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		add	esp,	8	;
+	REF: use = () def = ()	in = (1 )	 	out = (1 )	 		add	esp,	8	;désallocation des arguments
+
+	INPUT: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 11
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -128,6 +462,103 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	div1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	eax,	10	;
+	REF: 7 : ( 8 )		mov	eax,	10	;
+
+	INPUT: 8 : ( )		mov	r4,	5	;
+	REF: 8 : ( 9 )		mov	r4,	5	;
+
+	INPUT: 9 : ( )		idiv	r4	;
+	REF: 9 : ( 10 )		idiv	r4	;
+
+	INPUT: 10 : ( )		mov	r0,	eax	;
+	REF: 10 : ( 11 )		mov	r0,	eax	;
+
+	INPUT: 11 : ( )		mov	eax,	r0	;Write
+	REF: 11 : ( 12 )		mov	eax,	r0	;Write 1
+
+	INPUT: 12 : ( )		call	iprintLF	;
+	REF: 12 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 13 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 13 : ( 14 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 14 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 14 : ( 15 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 15
+------------------------------------------------------------------------------------------------------------
+
+
+#############	div1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 20
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	main	;
+	REF: use = () def = ()	in = (5 )	 	out = (5 )	 		call	main	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = (5 )	 	out = (5 )	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = (5 )	 	out = (5 )	 		mov	eax,	1	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		int 0x80	;
+	REF: use = () def = ()	in = (5 )	 	out = (5 )	 		int 0x80	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: use = () def = ()	in = (5 )	 	out = (5 )	 	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: use = () def = ()	in = (5 )	 	out = (5 )	 		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	0	;allocation des variables locales
+	REF: use = () def = ()	in = (5 )	 	out = (5 )	 		sub	esp,	0	;allocation des variables locales
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	10	;
+	REF: use = () def = (3 )	in = (5 )	 	out = (5 )	 		mov	eax,	10	;
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	5	;
+	REF: use = () def = (4 )	in = (5 )	 	out = (4 5 )	 		mov	r4,	5	;
+
+	INPUT: use = (4 ) def = ()	in = (4 )	 	out = ()	 		idiv	r4	;
+	REF: use = (4 ) def = ()	in = (4 5 )	 	out = (5 )	 		idiv	r4	;
+
+	INPUT: use = (3 ) def = (0 )	in = (3 )	 	out = ()	 		mov	r0,	eax	;
+	REF: use = (5 ) def = (0 )	in = (5 )	 	out = (0 )	 		mov	r0,	eax	;
+
+	INPUT: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write
+	REF: use = (0 ) def = (6 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 14
+------------------------------------------------------------------------------------------------------------
+
+
 #############	div1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -155,6 +586,127 @@ nb error in file: 0
 
 #############	div2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	div2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	eax,	20	;
+	REF: 7 : ( 8 )		mov	eax,	20	;
+
+	INPUT: 8 : ( )		mov	r5,	5	;
+	REF: 8 : ( 9 )		mov	r5,	5	;
+
+	INPUT: 9 : ( )		idiv	r5	;
+	REF: 9 : ( 10 )		idiv	r5	;
+
+	INPUT: 10 : ( )		mov	r0,	eax	;
+	REF: 10 : ( 11 )		mov	r0,	eax	;
+
+	INPUT: 11 : ( )		mov	eax,	r0	;
+	REF: 11 : ( 12 )		mov	eax,	r0	;
+
+	INPUT: 12 : ( )		mov	r7,	2	;
+	REF: 12 : ( 13 )		mov	r8,	2	;
+
+	INPUT: 13 : ( )		idiv	r7	;
+	REF: 13 : ( 14 )		idiv	r8	;
+
+	INPUT: 14 : ( )		mov	r1,	eax	;
+	REF: 14 : ( 15 )		mov	r1,	eax	;
+
+	INPUT: 15 : ( )		mov	eax,	r1	;Write
+	REF: 15 : ( 16 )		mov	eax,	r1	;Write 1
+
+	INPUT: 16 : ( )		call	iprintLF	;
+	REF: 16 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 17 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 17 : ( 18 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 18 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 18 : ( 19 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 19
+------------------------------------------------------------------------------------------------------------
+
+
+#############	div2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 28
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	main	;
+	REF: use = () def = ()	in = (6 9 )	 	out = (6 9 )	 		call	main	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = (6 9 )	 	out = (6 9 )	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = (6 9 )	 	out = (6 9 )	 		mov	eax,	1	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		int 0x80	;
+	REF: use = () def = ()	in = (6 9 )	 	out = (6 9 )	 		int 0x80	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: use = () def = ()	in = (6 9 )	 	out = (6 9 )	 	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: use = () def = ()	in = (6 9 )	 	out = (6 9 )	 		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	0	;allocation des variables locales
+	REF: use = () def = ()	in = (6 9 )	 	out = (6 9 )	 		sub	esp,	0	;allocation des variables locales
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	eax,	20	;
+	REF: use = () def = (4 )	in = (6 9 )	 	out = (6 9 )	 		mov	eax,	20	;
+
+	INPUT: use = () def = (5 )	in = ()	 	out = ()	 		mov	r5,	5	;
+	REF: use = () def = (5 )	in = (6 9 )	 	out = (5 6 9 )	 		mov	r5,	5	;
+
+	INPUT: use = (5 ) def = ()	in = (5 )	 	out = ()	 		idiv	r5	;
+	REF: use = (5 ) def = ()	in = (5 6 9 )	 	out = (6 9 )	 		idiv	r5	;
+
+	INPUT: use = (4 ) def = (0 )	in = (4 )	 	out = ()	 		mov	r0,	eax	;
+	REF: use = (6 ) def = (0 )	in = (6 9 )	 	out = (0 9 )	 		mov	r0,	eax	;
+
+	INPUT: use = (0 ) def = (6 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;
+	REF: use = (0 ) def = (7 )	in = (0 9 )	 	out = (9 )	 		mov	eax,	r0	;
+
+	INPUT: use = () def = (7 )	in = ()	 	out = ()	 		mov	r7,	2	;
+	REF: use = () def = (8 )	in = (9 )	 	out = (8 9 )	 		mov	r8,	2	;
+
+	INPUT: use = (7 ) def = ()	in = (7 )	 	out = ()	 		idiv	r7	;
+	REF: use = (8 ) def = ()	in = (8 9 )	 	out = (9 )	 		idiv	r8	;
+
+	INPUT: use = (6 ) def = (1 )	in = (6 )	 	out = ()	 		mov	r1,	eax	;
+	REF: use = (9 ) def = (1 )	in = (9 )	 	out = (1 )	 		mov	r1,	eax	;
+
+	INPUT: use = (1 ) def = (8 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (10 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 18
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -188,6 +740,112 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	et1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r3,	1	;JumpIfEqual
+	REF: 7 : ( 8 )		mov	r3,	1	;JumpIfEqual 1
+
+	INPUT: 8 : ( )		cmp	r3,	0	;on passe par un registre temporaire
+	REF: 8 : ( 9 )		cmp	r3,	0	;on passe par un registre temporaire
+
+	INPUT: 9 : ( )		je	l1	;
+	REF: 9 : ( 10 15 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 10 : ( )		mov	r4,	1	;JumpIfEqual
+	REF: 10 : ( 11 )		mov	r4,	1	;JumpIfEqual 1
+
+	INPUT: 11 : ( )		cmp	r4,	0	;on passe par un registre temporaire
+	REF: 11 : ( 12 )		cmp	r4,	0	;on passe par un registre temporaire
+
+	INPUT: 12 : ( )		je	l1	;
+	REF: 12 : ( 13 15 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 13 : ( )		mov	r0,	1	;Affect
+	REF: 13 : ( 14 )		mov	r0,	1	;Affect
+
+	INPUT: 14 : ( )		jmp	l0	;
+	REF: 14 : ( 16 )		jmp	l0	;Jump
+
+	INPUT: 15 : ( )	l1 :	mov	r0,	0	;Affect
+	REF: 15 : ( 16 )	l1 :	mov	r0,	0	;Affect
+
+	INPUT: 16 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 16 : ( 17 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 17 : ( )		call	iprintLF	;
+	REF: 17 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 18 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 18 : ( 19 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 19 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 19 : ( 20 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 20
+------------------------------------------------------------------------------------------------------------
+
+
+#############	et1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 5
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	r3,	1	;JumpIfEqual
+	REF: use = () def = (3 )	in = ()	 	out = (3 )	 		mov	r3,	1	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	1	;JumpIfEqual
+	REF: use = () def = (4 )	in = ()	 	out = (4 )	 		mov	r4,	1	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	1	;Affect
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jmp	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jmp	l0	;Jump
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 	l1 :	mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 	l1 :	mov	r0,	0	;Affect
+
+	INPUT: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 12
+------------------------------------------------------------------------------------------------------------
+
+
 #############	et1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -215,6 +873,112 @@ nb error in file: 0
 
 #############	et2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	et2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r3,	1	;JumpIfEqual
+	REF: 7 : ( 8 )		mov	r3,	1	;JumpIfEqual 1
+
+	INPUT: 8 : ( )		cmp	r3,	0	;on passe par un registre temporaire
+	REF: 8 : ( 9 )		cmp	r3,	0	;on passe par un registre temporaire
+
+	INPUT: 9 : ( )		je	l1	;
+	REF: 9 : ( 10 15 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 10 : ( )		mov	r4,	0	;JumpIfEqual
+	REF: 10 : ( 11 )		mov	r4,	0	;JumpIfEqual 1
+
+	INPUT: 11 : ( )		cmp	r4,	0	;on passe par un registre temporaire
+	REF: 11 : ( 12 )		cmp	r4,	0	;on passe par un registre temporaire
+
+	INPUT: 12 : ( )		je	l1	;
+	REF: 12 : ( 13 15 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 13 : ( )		mov	r0,	1	;Affect
+	REF: 13 : ( 14 )		mov	r0,	1	;Affect
+
+	INPUT: 14 : ( )		jmp	l0	;
+	REF: 14 : ( 16 )		jmp	l0	;Jump
+
+	INPUT: 15 : ( )	l1 :	mov	r0,	0	;Affect
+	REF: 15 : ( 16 )	l1 :	mov	r0,	0	;Affect
+
+	INPUT: 16 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 16 : ( 17 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 17 : ( )		call	iprintLF	;
+	REF: 17 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 18 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 18 : ( 19 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 19 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 19 : ( 20 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 20
+------------------------------------------------------------------------------------------------------------
+
+
+#############	et2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 5
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	r3,	1	;JumpIfEqual
+	REF: use = () def = (3 )	in = ()	 	out = (3 )	 		mov	r3,	1	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	0	;JumpIfEqual
+	REF: use = () def = (4 )	in = ()	 	out = (4 )	 		mov	r4,	0	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	1	;Affect
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jmp	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jmp	l0	;Jump
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 	l1 :	mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 	l1 :	mov	r0,	0	;Affect
+
+	INPUT: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 12
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -248,6 +1012,94 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	inf1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	1	;Affect
+	REF: 7 : ( 8 )		mov	r0,	1	;Affect
+
+	INPUT: 8 : ( )		mov	r3,	3	;JumpIfLess
+	REF: 8 : ( 9 )		mov	r3,	3	;JumpIfLess 1
+
+	INPUT: 9 : ( )		cmp	r3,	10	;on passe par un registre temporaire
+	REF: 9 : ( 10 )		cmp	r3,	10	;on passe par un registre temporaire
+
+	INPUT: 10 : ( )		jl	l0	;
+	REF: 10 : ( 11 12 )		jl	l0	;JumpIfLess 2
+
+	INPUT: 11 : ( )		mov	r0,	0	;Affect
+	REF: 11 : ( 12 )		mov	r0,	0	;Affect
+
+	INPUT: 12 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 12 : ( 13 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 13 : ( )		call	iprintLF	;
+	REF: 13 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 14 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 14 : ( 15 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 15 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 15 : ( 16 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 16
+------------------------------------------------------------------------------------------------------------
+
+
+#############	inf1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 9
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	1	;Affect
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	r3,	3	;JumpIfLess
+	REF: use = () def = (3 )	in = (0 )	 	out = (0 3 )	 		mov	r3,	3	;JumpIfLess 1
+
+	INPUT: use = (3 ) def = ()	in = (3 )	 	out = ()	 		cmp	r3,	10	;on passe par un registre temporaire
+	REF: use = (3 ) def = ()	in = (0 3 )	 	out = (0 )	 		cmp	r3,	10	;on passe par un registre temporaire
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jl	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jl	l0	;JumpIfLess 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	0	;Affect
+
+	INPUT: use = (0 ) def = (4 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (4 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 10
+------------------------------------------------------------------------------------------------------------
+
+
 #############	inf1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -275,6 +1127,94 @@ nb error in file: 0
 
 #############	inf2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	inf2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	1	;Affect
+	REF: 7 : ( 8 )		mov	r0,	1	;Affect
+
+	INPUT: 8 : ( )		mov	r3,	10	;JumpIfLess
+	REF: 8 : ( 9 )		mov	r3,	10	;JumpIfLess 1
+
+	INPUT: 9 : ( )		cmp	r3,	3	;on passe par un registre temporaire
+	REF: 9 : ( 10 )		cmp	r3,	3	;on passe par un registre temporaire
+
+	INPUT: 10 : ( )		jl	l0	;
+	REF: 10 : ( 11 12 )		jl	l0	;JumpIfLess 2
+
+	INPUT: 11 : ( )		mov	r0,	0	;Affect
+	REF: 11 : ( 12 )		mov	r0,	0	;Affect
+
+	INPUT: 12 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 12 : ( 13 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 13 : ( )		call	iprintLF	;
+	REF: 13 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 14 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 14 : ( 15 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 15 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 15 : ( 16 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 16
+------------------------------------------------------------------------------------------------------------
+
+
+#############	inf2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 9
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	1	;Affect
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	r3,	10	;JumpIfLess
+	REF: use = () def = (3 )	in = (0 )	 	out = (0 3 )	 		mov	r3,	10	;JumpIfLess 1
+
+	INPUT: use = (3 ) def = ()	in = (3 )	 	out = ()	 		cmp	r3,	3	;on passe par un registre temporaire
+	REF: use = (3 ) def = ()	in = (0 3 )	 	out = (0 )	 		cmp	r3,	3	;on passe par un registre temporaire
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jl	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jl	l0	;JumpIfLess 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	0	;Affect
+
+	INPUT: use = (0 ) def = (4 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (4 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 10
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -308,6 +1248,76 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	mult1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	3	;
+	REF: 7 : ( 8 )		mov	r0,	3	;
+
+	INPUT: 8 : ( )		imul	r0,	10	;
+	REF: 8 : ( 9 )		imul	r0,	10	;
+
+	INPUT: 9 : ( )		mov	eax,	r0	;Write
+	REF: 9 : ( 10 )		mov	eax,	r0	;Write 1
+
+	INPUT: 10 : ( )		call	iprintLF	;
+	REF: 10 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 11 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 11 : ( 12 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 12 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 12 : ( 13 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 13
+------------------------------------------------------------------------------------------------------------
+
+
+#############	mult1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	3	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	3	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		imul	r0,	10	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		imul	r0,	10	;
+
+	INPUT: use = (0 ) def = (3 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write
+	REF: use = (0 ) def = (3 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 7
+------------------------------------------------------------------------------------------------------------
+
+
 #############	mult1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -335,6 +1345,88 @@ nb error in file: 0
 
 #############	mult2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	mult2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	3	;
+	REF: 7 : ( 8 )		mov	r0,	3	;
+
+	INPUT: 8 : ( )		imul	r0,	10	;
+	REF: 8 : ( 9 )		imul	r0,	10	;
+
+	INPUT: 9 : ( )		mov	r1,	r0	;
+	REF: 9 : ( 10 )		mov	r1,	r0	;
+
+	INPUT: 10 : ( )		imul	r1,	2	;
+	REF: 10 : ( 11 )		imul	r1,	2	;
+
+	INPUT: 11 : ( )		mov	eax,	r1	;Write
+	REF: 11 : ( 12 )		mov	eax,	r1	;Write 1
+
+	INPUT: 12 : ( )		call	iprintLF	;
+	REF: 12 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 13 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 13 : ( 14 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 14 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 14 : ( 15 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 15
+------------------------------------------------------------------------------------------------------------
+
+
+#############	mult2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	3	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	3	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		imul	r0,	10	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		imul	r0,	10	;
+
+	INPUT: use = (0 ) def = (1 )	in = (0 )	 	out = ()	 		mov	r1,	r0	;
+	REF: use = (0 ) def = (1 )	in = (0 )	 	out = (1 )	 		mov	r1,	r0	;
+
+	INPUT: use = (1 ) def = (1 )	in = (1 )	 	out = ()	 		imul	r1,	2	;
+	REF: use = (1 ) def = (1 )	in = (1 )	 	out = (1 )	 		imul	r1,	2	;
+
+	INPUT: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 9
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -368,6 +1460,112 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	ou1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r3,	1	;JumpIfNotEqual
+	REF: 7 : ( 8 )		mov	r3,	1	;jumpIfNotEqual 1
+
+	INPUT: 8 : ( )		cmp	r3,	0	;on passe par un registre temporaire
+	REF: 8 : ( 9 )		cmp	r3,	0	;on passe par un registre temporaire
+
+	INPUT: 9 : ( )		jne	l1	;
+	REF: 9 : ( 10 15 )		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: 10 : ( )		mov	r4,	0	;JumpIfNotEqual
+	REF: 10 : ( 11 )		mov	r4,	0	;jumpIfNotEqual 1
+
+	INPUT: 11 : ( )		cmp	r4,	0	;on passe par un registre temporaire
+	REF: 11 : ( 12 )		cmp	r4,	0	;on passe par un registre temporaire
+
+	INPUT: 12 : ( )		jne	l1	;
+	REF: 12 : ( 13 15 )		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: 13 : ( )		mov	r0,	0	;Affect
+	REF: 13 : ( 14 )		mov	r0,	0	;Affect
+
+	INPUT: 14 : ( )		jmp	l0	;
+	REF: 14 : ( 16 )		jmp	l0	;Jump
+
+	INPUT: 15 : ( )	l1 :	mov	r0,	1	;Affect
+	REF: 15 : ( 16 )	l1 :	mov	r0,	1	;Affect
+
+	INPUT: 16 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 16 : ( 17 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 17 : ( )		call	iprintLF	;
+	REF: 17 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 18 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 18 : ( 19 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 19 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 19 : ( 20 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 20
+------------------------------------------------------------------------------------------------------------
+
+
+#############	ou1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 5
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	r3,	1	;JumpIfNotEqual
+	REF: use = () def = (3 )	in = ()	 	out = (3 )	 		mov	r3,	1	;jumpIfNotEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	0	;JumpIfNotEqual
+	REF: use = () def = (4 )	in = ()	 	out = (4 )	 		mov	r4,	0	;jumpIfNotEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	0	;Affect
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jmp	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jmp	l0	;Jump
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 	l1 :	mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 	l1 :	mov	r0,	1	;Affect
+
+	INPUT: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 12
+------------------------------------------------------------------------------------------------------------
+
+
 #############	ou1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -395,6 +1593,112 @@ nb error in file: 0
 
 #############	ou2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	ou2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r3,	1	;JumpIfNotEqual
+	REF: 7 : ( 8 )		mov	r3,	1	;jumpIfNotEqual 1
+
+	INPUT: 8 : ( )		cmp	r3,	0	;on passe par un registre temporaire
+	REF: 8 : ( 9 )		cmp	r3,	0	;on passe par un registre temporaire
+
+	INPUT: 9 : ( )		jne	l1	;
+	REF: 9 : ( 10 15 )		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: 10 : ( )		mov	r4,	1	;JumpIfNotEqual
+	REF: 10 : ( 11 )		mov	r4,	1	;jumpIfNotEqual 1
+
+	INPUT: 11 : ( )		cmp	r4,	0	;on passe par un registre temporaire
+	REF: 11 : ( 12 )		cmp	r4,	0	;on passe par un registre temporaire
+
+	INPUT: 12 : ( )		jne	l1	;
+	REF: 12 : ( 13 15 )		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: 13 : ( )		mov	r0,	0	;Affect
+	REF: 13 : ( 14 )		mov	r0,	0	;Affect
+
+	INPUT: 14 : ( )		jmp	l0	;
+	REF: 14 : ( 16 )		jmp	l0	;Jump
+
+	INPUT: 15 : ( )	l1 :	mov	r0,	1	;Affect
+	REF: 15 : ( 16 )	l1 :	mov	r0,	1	;Affect
+
+	INPUT: 16 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 16 : ( 17 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 17 : ( )		call	iprintLF	;
+	REF: 17 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 18 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 18 : ( 19 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 19 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 19 : ( 20 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 20
+------------------------------------------------------------------------------------------------------------
+
+
+#############	ou2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 5
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	r3,	1	;JumpIfNotEqual
+	REF: use = () def = (3 )	in = ()	 	out = (3 )	 		mov	r3,	1	;jumpIfNotEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	1	;JumpIfNotEqual
+	REF: use = () def = (4 )	in = ()	 	out = (4 )	 		mov	r4,	1	;jumpIfNotEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		jne	l1	;jumpIfNotEqual 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	0	;Affect
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jmp	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jmp	l0	;Jump
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 	l1 :	mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 	l1 :	mov	r0,	1	;Affect
+
+	INPUT: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 12
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -428,6 +1732,88 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	prio1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	3	;
+	REF: 7 : ( 8 )		mov	r0,	3	;
+
+	INPUT: 8 : ( )		imul	r0,	10	;
+	REF: 8 : ( 9 )		imul	r0,	10	;
+
+	INPUT: 9 : ( )		mov	r1,	1	;
+	REF: 9 : ( 10 )		mov	r1,	1	;
+
+	INPUT: 10 : ( )		add	r1,	r0	;
+	REF: 10 : ( 11 )		add	r1,	r0	;
+
+	INPUT: 11 : ( )		mov	eax,	r1	;Write
+	REF: 11 : ( 12 )		mov	eax,	r1	;Write 1
+
+	INPUT: 12 : ( )		call	iprintLF	;
+	REF: 12 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 13 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 13 : ( 14 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 14 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 14 : ( 15 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 15
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 5
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	3	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	3	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		imul	r0,	10	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		imul	r0,	10	;
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	1	;
+	REF: use = () def = (1 )	in = (0 )	 	out = (0 1 )	 		mov	r1,	1	;
+
+	INPUT: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = ()	 		add	r1,	r0	;
+	REF: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = (1 )	 		add	r1,	r0	;
+
+	INPUT: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 9
+------------------------------------------------------------------------------------------------------------
+
+
 #############	prio1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -455,6 +1841,88 @@ nb error in file: 0
 
 #############	prio2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	3	;
+	REF: 7 : ( 8 )		mov	r0,	3	;
+
+	INPUT: 8 : ( )		imul	r0,	10	;
+	REF: 8 : ( 9 )		imul	r0,	10	;
+
+	INPUT: 9 : ( )		mov	r1,	1	;
+	REF: 9 : ( 10 )		mov	r1,	1	;
+
+	INPUT: 10 : ( )		sub	r1,	r0	;
+	REF: 10 : ( 11 )		sub	r1,	r0	;
+
+	INPUT: 11 : ( )		mov	eax,	r1	;Write
+	REF: 11 : ( 12 )		mov	eax,	r1	;Write 1
+
+	INPUT: 12 : ( )		call	iprintLF	;
+	REF: 12 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 13 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 13 : ( 14 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 14 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 14 : ( 15 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 15
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 5
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	3	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	3	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		imul	r0,	10	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		imul	r0,	10	;
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	1	;
+	REF: use = () def = (1 )	in = (0 )	 	out = (0 1 )	 		mov	r1,	1	;
+
+	INPUT: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = ()	 		sub	r1,	r0	;
+	REF: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = (1 )	 		sub	r1,	r0	;
+
+	INPUT: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 9
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -488,6 +1956,115 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	prio3.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	eax,	6	;
+	REF: 7 : ( 8 )		mov	eax,	6	;
+
+	INPUT: 8 : ( )		mov	r5,	3	;
+	REF: 8 : ( 9 )		mov	r5,	3	;
+
+	INPUT: 9 : ( )		idiv	r5	;
+	REF: 9 : ( 10 )		idiv	r5	;
+
+	INPUT: 10 : ( )		mov	r0,	eax	;
+	REF: 10 : ( 11 )		mov	r0,	eax	;
+
+	INPUT: 11 : ( )		mov	r1,	1	;
+	REF: 11 : ( 12 )		mov	r1,	1	;
+
+	INPUT: 12 : ( )		add	r1,	r0	;
+	REF: 12 : ( 13 )		add	r1,	r0	;
+
+	INPUT: 13 : ( )		mov	eax,	r1	;Write
+	REF: 13 : ( 14 )		mov	eax,	r1	;Write 1
+
+	INPUT: 14 : ( )		call	iprintLF	;
+	REF: 14 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 15 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 15 : ( 16 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 16 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 16 : ( 17 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 17
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio3.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 20
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	main	;
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		call	main	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = (6 )	 	out = (6 )	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = (6 )	 	out = (6 )	 		mov	eax,	1	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		int 0x80	;
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		int 0x80	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	0	;allocation des variables locales
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		sub	esp,	0	;allocation des variables locales
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	eax,	6	;
+	REF: use = () def = (4 )	in = (6 )	 	out = (6 )	 		mov	eax,	6	;
+
+	INPUT: use = () def = (5 )	in = ()	 	out = ()	 		mov	r5,	3	;
+	REF: use = () def = (5 )	in = (6 )	 	out = (5 6 )	 		mov	r5,	3	;
+
+	INPUT: use = (5 ) def = ()	in = (5 )	 	out = ()	 		idiv	r5	;
+	REF: use = (5 ) def = ()	in = (5 6 )	 	out = (6 )	 		idiv	r5	;
+
+	INPUT: use = (4 ) def = (0 )	in = (4 )	 	out = ()	 		mov	r0,	eax	;
+	REF: use = (6 ) def = (0 )	in = (6 )	 	out = (0 )	 		mov	r0,	eax	;
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	1	;
+	REF: use = () def = (1 )	in = (0 )	 	out = (0 1 )	 		mov	r1,	1	;
+
+	INPUT: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = ()	 		add	r1,	r0	;
+	REF: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = (1 )	 		add	r1,	r0	;
+
+	INPUT: use = (1 ) def = (6 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (7 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 16
+------------------------------------------------------------------------------------------------------------
+
+
 #############	prio3.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -515,6 +2092,115 @@ nb error in file: 0
 
 #############	prio4.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio4.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	eax,	6	;
+	REF: 7 : ( 8 )		mov	eax,	6	;
+
+	INPUT: 8 : ( )		mov	r5,	3	;
+	REF: 8 : ( 9 )		mov	r5,	3	;
+
+	INPUT: 9 : ( )		idiv	r5	;
+	REF: 9 : ( 10 )		idiv	r5	;
+
+	INPUT: 10 : ( )		mov	r0,	eax	;
+	REF: 10 : ( 11 )		mov	r0,	eax	;
+
+	INPUT: 11 : ( )		mov	r1,	3	;
+	REF: 11 : ( 12 )		mov	r1,	3	;
+
+	INPUT: 12 : ( )		sub	r1,	r0	;
+	REF: 12 : ( 13 )		sub	r1,	r0	;
+
+	INPUT: 13 : ( )		mov	eax,	r1	;Write
+	REF: 13 : ( 14 )		mov	eax,	r1	;Write 1
+
+	INPUT: 14 : ( )		call	iprintLF	;
+	REF: 14 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 15 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 15 : ( 16 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 16 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 16 : ( 17 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 17
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio4.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 20
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	main	;
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		call	main	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = (6 )	 	out = (6 )	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = (6 )	 	out = (6 )	 		mov	eax,	1	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		int 0x80	;
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		int 0x80	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	0	;allocation des variables locales
+	REF: use = () def = ()	in = (6 )	 	out = (6 )	 		sub	esp,	0	;allocation des variables locales
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	eax,	6	;
+	REF: use = () def = (4 )	in = (6 )	 	out = (6 )	 		mov	eax,	6	;
+
+	INPUT: use = () def = (5 )	in = ()	 	out = ()	 		mov	r5,	3	;
+	REF: use = () def = (5 )	in = (6 )	 	out = (5 6 )	 		mov	r5,	3	;
+
+	INPUT: use = (5 ) def = ()	in = (5 )	 	out = ()	 		idiv	r5	;
+	REF: use = (5 ) def = ()	in = (5 6 )	 	out = (6 )	 		idiv	r5	;
+
+	INPUT: use = (4 ) def = (0 )	in = (4 )	 	out = ()	 		mov	r0,	eax	;
+	REF: use = (6 ) def = (0 )	in = (6 )	 	out = (0 )	 		mov	r0,	eax	;
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	3	;
+	REF: use = () def = (1 )	in = (0 )	 	out = (0 1 )	 		mov	r1,	3	;
+
+	INPUT: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = ()	 		sub	r1,	r0	;
+	REF: use = (0 1 ) def = (1 )	in = (0 1 )	 	out = (1 )	 		sub	r1,	r0	;
+
+	INPUT: use = (1 ) def = (6 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (7 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 16
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -548,6 +2234,112 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	prio5.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r1,	2	;
+	REF: 7 : ( 8 )		mov	r1,	2	;
+
+	INPUT: 8 : ( )		imul	r1,	3	;
+	REF: 8 : ( 9 )		imul	r1,	3	;
+
+	INPUT: 9 : ( )		mov	r2,	1	;
+	REF: 9 : ( 10 )		mov	r2,	1	;
+
+	INPUT: 10 : ( )		add	r2,	r1	;
+	REF: 10 : ( 11 )		add	r2,	r1	;
+
+	INPUT: 11 : ( )		mov	r0,	1	;Affect
+	REF: 11 : ( 12 )		mov	r0,	1	;Affect
+
+	INPUT: 12 : ( )		cmp	r2,	10	;JumpIfLess
+	REF: 12 : ( 13 )		cmp	r2,	10	;JumpIfLess 1
+
+	INPUT: 13 : ( )		jl	l0	;
+	REF: 13 : ( 14 15 )		jl	l0	;JumpIfLess 2
+
+	INPUT: 14 : ( )		mov	r0,	0	;Affect
+	REF: 14 : ( 15 )		mov	r0,	0	;Affect
+
+	INPUT: 15 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 15 : ( 16 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 16 : ( )		call	iprintLF	;
+	REF: 16 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 17 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 17 : ( 18 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 18 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 18 : ( 19 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 19
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio5.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 7
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (4 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	2	;
+	REF: use = () def = (1 )	in = ()	 	out = (1 )	 		mov	r1,	2	;
+
+	INPUT: use = (1 ) def = (1 )	in = (1 )	 	out = ()	 		imul	r1,	3	;
+	REF: use = (1 ) def = (1 )	in = (1 )	 	out = (1 )	 		imul	r1,	3	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	r2,	1	;
+	REF: use = () def = (2 )	in = (1 )	 	out = (1 2 )	 		mov	r2,	1	;
+
+	INPUT: use = (1 2 ) def = (2 )	in = (1 2 )	 	out = ()	 		add	r2,	r1	;
+	REF: use = (1 2 ) def = (2 )	in = (1 2 )	 	out = (2 )	 		add	r2,	r1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = (2 )	 	out = (0 2 )	 		mov	r0,	1	;Affect
+
+	INPUT: use = (2 ) def = ()	in = (2 )	 	out = ()	 		cmp	r2,	10	;JumpIfLess
+	REF: use = (2 ) def = ()	in = (0 2 )	 	out = (0 )	 		cmp	r2,	10	;JumpIfLess 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jl	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jl	l0	;JumpIfLess 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	0	;Affect
+
+	INPUT: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (5 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 13
+------------------------------------------------------------------------------------------------------------
+
+
 #############	prio5.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -575,6 +2367,190 @@ nb error in file: 0
 
 #############	prio6.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio6.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r2,	2	;
+	REF: 7 : ( 8 )		mov	r2,	2	;
+
+	INPUT: 8 : ( )		imul	r2,	3	;
+	REF: 8 : ( 9 )		imul	r2,	3	;
+
+	INPUT: 9 : ( )		mov	r3,	1	;
+	REF: 9 : ( 10 )		mov	r3,	1	;
+
+	INPUT: 10 : ( )		add	r3,	r2	;
+	REF: 10 : ( 11 )		add	r3,	r2	;
+
+	INPUT: 11 : ( )		mov	r1,	1	;Affect
+	REF: 11 : ( 12 )		mov	r1,	1	;Affect
+
+	INPUT: 12 : ( )		cmp	r3,	0	;JumpIfLess
+	REF: 12 : ( 13 )		cmp	r3,	0	;JumpIfLess 1
+
+	INPUT: 13 : ( )		jl	l2	;
+	REF: 13 : ( 14 15 )		jl	l2	;JumpIfLess 2
+
+	INPUT: 14 : ( )		mov	r1,	0	;Affect
+	REF: 14 : ( 15 )		mov	r1,	0	;Affect
+
+	INPUT: 15 : ( )	l2 :	mov	r5,	2	;
+	REF: 15 : ( 16 )	l2 :	mov	r5,	2	;
+
+	INPUT: 16 : ( )		add	r5,	2	;
+	REF: 16 : ( 17 )		add	r5,	2	;
+
+	INPUT: 17 : ( )		mov	r4,	1	;Affect
+	REF: 17 : ( 18 )		mov	r4,	1	;Affect
+
+	INPUT: 18 : ( )		cmp	r5,	0	;JumpIfLess
+	REF: 18 : ( 19 )		cmp	r5,	0	;JumpIfLess 1
+
+	INPUT: 19 : ( )		jl	l3	;
+	REF: 19 : ( 20 21 )		jl	l3	;JumpIfLess 2
+
+	INPUT: 20 : ( )		mov	r4,	0	;Affect
+	REF: 20 : ( 21 )		mov	r4,	0	;Affect
+
+	INPUT: 21 : ( )	l3 :	cmp	r1,	0	;JumpIfEqual
+	REF: 21 : ( 22 )	l3 :	cmp	r1,	0	;JumpIfEqual 1
+
+	INPUT: 22 : ( )		je	l1	;
+	REF: 22 : ( 23 27 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 23 : ( )		cmp	r4,	0	;JumpIfEqual
+	REF: 23 : ( 24 )		cmp	r4,	0	;JumpIfEqual 1
+
+	INPUT: 24 : ( )		je	l1	;
+	REF: 24 : ( 25 27 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 25 : ( )		mov	r0,	1	;Affect
+	REF: 25 : ( 26 )		mov	r0,	1	;Affect
+
+	INPUT: 26 : ( )		jmp	l0	;
+	REF: 26 : ( 28 )		jmp	l0	;Jump
+
+	INPUT: 27 : ( )	l1 :	mov	r0,	0	;Affect
+	REF: 27 : ( 28 )	l1 :	mov	r0,	0	;Affect
+
+	INPUT: 28 : ( )	l0 :	mov	eax,	r0	;Write
+	REF: 28 : ( 29 )	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: 29 : ( )		call	iprintLF	;
+	REF: 29 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 30 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 30 : ( 31 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 31 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 31 : ( 32 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 32
+------------------------------------------------------------------------------------------------------------
+
+
+#############	prio6.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 17
+
+	INPUT: use = () def = (7 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (6 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (6 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (7 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	r2,	2	;
+	REF: use = () def = (2 )	in = ()	 	out = (2 )	 		mov	r2,	2	;
+
+	INPUT: use = (2 ) def = (2 )	in = (2 )	 	out = ()	 		imul	r2,	3	;
+	REF: use = (2 ) def = (2 )	in = (2 )	 	out = (2 )	 		imul	r2,	3	;
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	r3,	1	;
+	REF: use = () def = (3 )	in = (2 )	 	out = (2 3 )	 		mov	r3,	1	;
+
+	INPUT: use = (2 3 ) def = (3 )	in = (2 3 )	 	out = ()	 		add	r3,	r2	;
+	REF: use = (2 3 ) def = (3 )	in = (2 3 )	 	out = (3 )	 		add	r3,	r2	;
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	1	;Affect
+	REF: use = () def = (1 )	in = (3 )	 	out = (1 3 )	 		mov	r1,	1	;Affect
+
+	INPUT: use = (3 ) def = ()	in = (3 )	 	out = ()	 		cmp	r3,	0	;JumpIfLess
+	REF: use = (3 ) def = ()	in = (1 3 )	 	out = (1 )	 		cmp	r3,	0	;JumpIfLess 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jl	l2	;
+	REF: use = () def = ()	in = (1 )	 	out = (1 )	 		jl	l2	;JumpIfLess 2
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	0	;Affect
+	REF: use = () def = (1 )	in = ()	 	out = (1 )	 		mov	r1,	0	;Affect
+
+	INPUT: use = () def = (5 )	in = ()	 	out = ()	 	l2 :	mov	r5,	2	;
+	REF: use = () def = (5 )	in = (1 )	 	out = (1 5 )	 	l2 :	mov	r5,	2	;
+
+	INPUT: use = (5 ) def = (5 )	in = (5 )	 	out = ()	 		add	r5,	2	;
+	REF: use = (5 ) def = (5 )	in = (1 5 )	 	out = (1 5 )	 		add	r5,	2	;
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	1	;Affect
+	REF: use = () def = (4 )	in = (1 5 )	 	out = (1 4 5 )	 		mov	r4,	1	;Affect
+
+	INPUT: use = (5 ) def = ()	in = (5 )	 	out = ()	 		cmp	r5,	0	;JumpIfLess
+	REF: use = (5 ) def = ()	in = (1 4 5 )	 	out = (1 4 )	 		cmp	r5,	0	;JumpIfLess 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jl	l3	;
+	REF: use = () def = ()	in = (1 4 )	 	out = (1 4 )	 		jl	l3	;JumpIfLess 2
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	0	;Affect
+	REF: use = () def = (4 )	in = (1 )	 	out = (1 4 )	 		mov	r4,	0	;Affect
+
+	INPUT: use = (1 ) def = ()	in = (1 )	 	out = ()	 	l3 :	cmp	r1,	0	;JumpIfEqual
+	REF: use = (1 ) def = ()	in = (1 4 )	 	out = (4 )	 	l3 :	cmp	r1,	0	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = (4 )	 	out = (4 )	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = (4 ) def = ()	in = (4 )	 	out = ()	 		cmp	r4,	0	;JumpIfEqual
+	REF: use = (4 ) def = ()	in = (4 )	 	out = ()	 		cmp	r4,	0	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	1	;Affect
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jmp	l0	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jmp	l0	;Jump
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 	l1 :	mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 	l1 :	mov	r0,	0	;Affect
+
+	INPUT: use = (0 ) def = (8 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write
+	REF: use = (0 ) def = (8 )	in = (0 )	 	out = ()	 	l0 :	mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 26
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -608,6 +2584,79 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	si1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r2,	1	;JumpIfEqual
+	REF: 7 : ( 8 )		mov	r2,	1	;JumpIfEqual 1
+
+	INPUT: 8 : ( )		cmp	r2,	0	;on passe par un registre temporaire
+	REF: 8 : ( 9 )		cmp	r2,	0	;on passe par un registre temporaire
+
+	INPUT: 9 : ( )		je	l1	;
+	REF: 9 : ( 10 12 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 10 : ( )		mov	eax,	1	;Write
+	REF: 10 : ( 11 )		mov	eax,	1	;Write 1
+
+	INPUT: 11 : ( )		call	iprintLF	;
+	REF: 11 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 12 : ( )	l1 :	add	esp,	0	;désallocation des variables locales
+	REF: 12 : ( 13 )	l1 :	add	esp,	0	;désallocation des variables locales
+
+	INPUT: 13 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 13 : ( 14 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 14
+------------------------------------------------------------------------------------------------------------
+
+
+#############	si1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (0 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	r2,	1	;JumpIfEqual
+	REF: use = () def = (2 )	in = ()	 	out = (2 )	 		mov	r2,	1	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;Write
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 7
+------------------------------------------------------------------------------------------------------------
+
+
 #############	si1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -635,6 +2684,91 @@ nb error in file: 0
 
 #############	si2.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	si2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r2,	0	;JumpIfEqual
+	REF: 7 : ( 8 )		mov	r2,	0	;JumpIfEqual 1
+
+	INPUT: 8 : ( )		cmp	r2,	0	;on passe par un registre temporaire
+	REF: 8 : ( 9 )		cmp	r2,	0	;on passe par un registre temporaire
+
+	INPUT: 9 : ( )		je	l1	;
+	REF: 9 : ( 10 12 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 10 : ( )		mov	eax,	1	;Write
+	REF: 10 : ( 11 )		mov	eax,	1	;Write 1
+
+	INPUT: 11 : ( )		call	iprintLF	;
+	REF: 11 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 12 : ( )	l1 :	mov	eax,	0	;Write
+	REF: 12 : ( 13 )	l1 :	mov	eax,	0	;Write 1
+
+	INPUT: 13 : ( )		call	iprintLF	;
+	REF: 13 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 14 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 14 : ( 15 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 15 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 15 : ( 16 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 16
+------------------------------------------------------------------------------------------------------------
+
+
+#############	si2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (0 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	r2,	0	;JumpIfEqual
+	REF: use = () def = (2 )	in = ()	 	out = (2 )	 		mov	r2,	0	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;Write
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 	l1 :	mov	eax,	0	;Write
+	REF: use = () def = (4 )	in = ()	 	out = ()	 	l1 :	mov	eax,	0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 9
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -668,6 +2802,97 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	sinon.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r2,	0	;JumpIfEqual
+	REF: 7 : ( 8 )		mov	r2,	0	;JumpIfEqual 1
+
+	INPUT: 8 : ( )		cmp	r2,	0	;on passe par un registre temporaire
+	REF: 8 : ( 9 )		cmp	r2,	0	;on passe par un registre temporaire
+
+	INPUT: 9 : ( )		je	l0	;
+	REF: 9 : ( 10 13 )		je	l0	;JumpIfEqual 2
+
+	INPUT: 10 : ( )		mov	eax,	1	;Write
+	REF: 10 : ( 11 )		mov	eax,	1	;Write 1
+
+	INPUT: 11 : ( )		call	iprintLF	;
+	REF: 11 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 12 : ( )		jmp	l1	;
+	REF: 12 : ( 15 )		jmp	l1	;Jump
+
+	INPUT: 13 : ( )	l0 :	mov	eax,	0	;Write
+	REF: 13 : ( 14 )	l0 :	mov	eax,	0	;Write 1
+
+	INPUT: 14 : ( )		call	iprintLF	;
+	REF: 14 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 15 : ( )	l1 :	add	esp,	0	;désallocation des variables locales
+	REF: 15 : ( 16 )	l1 :	add	esp,	0	;désallocation des variables locales
+
+	INPUT: 16 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 16 : ( 17 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 17
+------------------------------------------------------------------------------------------------------------
+
+
+#############	sinon.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (0 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	r2,	0	;JumpIfEqual
+	REF: use = () def = (2 )	in = ()	 	out = (2 )	 		mov	r2,	0	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l0	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l0	;JumpIfEqual 2
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;Write
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jmp	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		jmp	l1	;Jump
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 	l0 :	mov	eax,	0	;Write
+	REF: use = () def = (4 )	in = ()	 	out = ()	 	l0 :	mov	eax,	0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 10
+------------------------------------------------------------------------------------------------------------
+
+
 #############	sinon.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -695,6 +2920,76 @@ nb error in file: 0
 
 #############	sub1.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	sub1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	10	;
+	REF: 7 : ( 8 )		mov	r0,	10	;
+
+	INPUT: 8 : ( )		sub	r0,	5	;
+	REF: 8 : ( 9 )		sub	r0,	5	;
+
+	INPUT: 9 : ( )		mov	eax,	r0	;Write
+	REF: 9 : ( 10 )		mov	eax,	r0	;Write 1
+
+	INPUT: 10 : ( )		call	iprintLF	;
+	REF: 10 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 11 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 11 : ( 12 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 12 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 12 : ( 13 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 13
+------------------------------------------------------------------------------------------------------------
+
+
+#############	sub1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	10	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	10	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		sub	r0,	5	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		sub	r0,	5	;
+
+	INPUT: use = (0 ) def = (3 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write
+	REF: use = (0 ) def = (3 )	in = (0 )	 	out = ()	 		mov	eax,	r0	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 7
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -728,6 +3023,88 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	sub2.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	r0,	5	;
+	REF: 7 : ( 8 )		mov	r0,	5	;
+
+	INPUT: 8 : ( )		sub	r0,	2	;
+	REF: 8 : ( 9 )		sub	r0,	2	;
+
+	INPUT: 9 : ( )		mov	r1,	r0	;
+	REF: 9 : ( 10 )		mov	r1,	r0	;
+
+	INPUT: 10 : ( )		sub	r1,	3	;
+	REF: 10 : ( 11 )		sub	r1,	3	;
+
+	INPUT: 11 : ( )		mov	eax,	r1	;Write
+	REF: 11 : ( 12 )		mov	eax,	r1	;Write 1
+
+	INPUT: 12 : ( )		call	iprintLF	;
+	REF: 12 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 13 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 13 : ( 14 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 14 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 14 : ( 15 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 15
+------------------------------------------------------------------------------------------------------------
+
+
+#############	sub2.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	5	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	5	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		sub	r0,	2	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		sub	r0,	2	;
+
+	INPUT: use = (0 ) def = (1 )	in = (0 )	 	out = ()	 		mov	r1,	r0	;
+	REF: use = (0 ) def = (1 )	in = (0 )	 	out = (1 )	 		mov	r1,	r0	;
+
+	INPUT: use = (1 ) def = (1 )	in = (1 )	 	out = ()	 		sub	r1,	3	;
+	REF: use = (1 ) def = (1 )	in = (1 )	 	out = (1 )	 		sub	r1,	3	;
+
+	INPUT: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 9
+------------------------------------------------------------------------------------------------------------
+
+
 #############	sub2.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -755,6 +3132,67 @@ nb error in file: 0
 
 #############	tab1.c3aout	###################################
 nb error in file: 0
+------------------------------------------------------------------------------------------------------------
+
+
+#############	tab1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	dword [t+4*5],	123	;Affect
+	REF: 7 : ( 8 )		mov	dword [t+4*5],	123	;Affect
+
+	INPUT: 8 : ( )		mov	eax,	dword [t+4*5]	;Write
+	REF: 8 : ( 9 )		mov	eax,	dword [t+4*5]	;Write 1
+
+	INPUT: 9 : ( )		call	iprintLF	;
+	REF: 9 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 10 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 10 : ( 11 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 11 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 11 : ( 12 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 12
+------------------------------------------------------------------------------------------------------------
+
+
+#############	tab1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 1
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (0 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (1 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	dword [t+4*5]	;Write
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	dword [t+4*5]	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 5
 ------------------------------------------------------------------------------------------------------------
 
 
@@ -788,6 +3226,130 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	tantque.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 4 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	dword [a],	10	;Affect
+	REF: 7 : ( 8 )		mov	dword [a],	10	;Affect
+
+	INPUT: 8 : ( )	l0 :	mov	r0,	1	;Affect
+	REF: 8 : ( 9 )	l0 :	mov	r0,	1	;Affect
+
+	INPUT: 9 : ( )		mov	r4,	2	;JumpIfLess
+	REF: 9 : ( 10 )		mov	r4,	2	;JumpIfLess 1
+
+	INPUT: 10 : ( )		cmp	r4,	dword [a]	;on passe par un registre temporaire
+	REF: 10 : ( 11 )		cmp	r4,	dword [a]	;on passe par un registre temporaire
+
+	INPUT: 11 : ( )		jl	l2	;
+	REF: 11 : ( 12 13 )		jl	l2	;JumpIfLess 2
+
+	INPUT: 12 : ( )		mov	r0,	0	;Affect
+	REF: 12 : ( 13 )		mov	r0,	0	;Affect
+
+	INPUT: 13 : ( )	l2 :	cmp	r0,	0	;JumpIfEqual
+	REF: 13 : ( 14 )	l2 :	cmp	r0,	0	;JumpIfEqual 1
+
+	INPUT: 14 : ( )		je	l1	;
+	REF: 14 : ( 15 21 )		je	l1	;JumpIfEqual 2
+
+	INPUT: 15 : ( )		mov	eax,	dword [a]	;Write
+	REF: 15 : ( 16 )		mov	eax,	dword [a]	;Write 1
+
+	INPUT: 16 : ( )		call	iprintLF	;
+	REF: 16 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 17 : ( )		mov	r1,	dword [a]	;
+	REF: 17 : ( 18 )		mov	r1,	dword [a]	;
+
+	INPUT: 18 : ( )		sub	r1,	1	;
+	REF: 18 : ( 19 )		sub	r1,	1	;
+
+	INPUT: 19 : ( )		mov	dword [a],	r1	;Affect
+	REF: 19 : ( 20 )		mov	dword [a],	r1	;Affect
+
+	INPUT: 20 : ( )		jmp	l0	;
+	REF: 20 : ( 8 )		jmp	l0	;Jump
+
+	INPUT: 21 : ( )	l1 :	add	esp,	0	;désallocation des variables locales
+	REF: 21 : ( 22 )	l1 :	add	esp,	0	;désallocation des variables locales
+
+	INPUT: 22 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 22 : ( 23 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 23
+------------------------------------------------------------------------------------------------------------
+
+
+#############	tantque.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 9
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 	l0 :	mov	r0,	1	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 	l0 :	mov	r0,	1	;Affect
+
+	INPUT: use = () def = (4 )	in = ()	 	out = ()	 		mov	r4,	2	;JumpIfLess
+	REF: use = () def = (4 )	in = (0 )	 	out = (0 4 )	 		mov	r4,	2	;JumpIfLess 1
+
+	INPUT: use = (4 ) def = ()	in = (4 )	 	out = ()	 		cmp	r4,	dword [a]	;on passe par un registre temporaire
+	REF: use = (4 ) def = ()	in = (0 4 )	 	out = (0 )	 		cmp	r4,	dword [a]	;on passe par un registre temporaire
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jl	l2	;
+	REF: use = () def = ()	in = (0 )	 	out = (0 )	 		jl	l2	;JumpIfLess 2
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	0	;Affect
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	0	;Affect
+
+	INPUT: use = (0 ) def = ()	in = (0 )	 	out = ()	 	l2 :	cmp	r0,	0	;JumpIfEqual
+	REF: use = (0 ) def = ()	in = (0 )	 	out = ()	 	l2 :	cmp	r0,	0	;JumpIfEqual 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		je	l1	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		je	l1	;JumpIfEqual 2
+
+	INPUT: use = () def = (5 )	in = ()	 	out = ()	 		mov	eax,	dword [a]	;Write
+	REF: use = () def = (5 )	in = ()	 	out = ()	 		mov	eax,	dword [a]	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		mov	r1,	dword [a]	;
+	REF: use = () def = (1 )	in = ()	 	out = (1 )	 		mov	r1,	dword [a]	;
+
+	INPUT: use = (1 ) def = (1 )	in = (1 )	 	out = ()	 		sub	r1,	1	;
+	REF: use = (1 ) def = (1 )	in = (1 )	 	out = (1 )	 		sub	r1,	1	;
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		jmp	l0	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		jmp	l0	;Jump
+
+nb error in file: 15
+------------------------------------------------------------------------------------------------------------
+
+
 #############	tantque.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -818,6 +3380,121 @@ nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
 
 
+#############	varloc1.fg	###################################
+	INPUT: 0 : ( )		call	main	;
+	REF: 0 : ( 15 )		call	main	;
+
+	INPUT: 1 : ( )		mov	ebx,	0	;valeur de retour du programme
+	REF: 1 : ( 2 )		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: 2 : ( )		mov	eax,	1	;
+	REF: 2 : ( 3 )		mov	eax,	1	;
+
+	INPUT: 3 : ( )		int 0x80	;
+	REF: 3 : ( 4 )		int 0x80	;
+
+	INPUT: 4 : ( )	procedure :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 4 : ( 5 )	procedure :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 5 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 5 : ( 6 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 6 : ( )		sub	esp,	8	;allocation des variables locales
+	REF: 6 : ( 7 )		sub	esp,	8	;allocation des variables locales
+
+	INPUT: 7 : ( )		mov	dword [ebp-4*1],	2	;Affect
+	REF: 7 : ( 8 )		mov	dword [ebp-4*1],	2	;Affect
+
+	INPUT: 8 : ( )		mov	dword [ebp-4*2],	2	;Affect
+	REF: 8 : ( 9 )		mov	dword [ebp-4*2],	2	;Affect
+
+	INPUT: 9 : ( )		mov	r0,	dword [ebp-4*1]	;
+	REF: 9 : ( 10 )		mov	r0,	dword [ebp-4*1]	;
+
+	INPUT: 10 : ( )		add	r0,	dword [ebp-4*2]	;
+	REF: 10 : ( 11 )		add	r0,	dword [ebp-4*2]	;
+
+	INPUT: 11 : ( )		mov	dword [ebp+4*2],	r0	;Return
+	REF: 11 : ( 12 )		mov	dword [ebp+4*2],	r0	;ecriture de la valeur de retour
+
+	INPUT: 12 : ( )		add	esp,	8	;désallocation des variables locales
+	REF: 12 : ( 13 )		add	esp,	8	;désallocation des variables locales
+
+	INPUT: 13 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 13 : ( 14 )		pop	ebp	;restaure la valeur de ebp
+
+	INPUT: 14 : ( )		ret	;
+	REF: 14 : ( 15 )		ret	;
+
+	INPUT: 15 : ( )	main :	push	ebp	;sauvegarde la valeur de ebp
+	REF: 15 : ( 16 )	main :	push	ebp	;sauvegarde la valeur de ebp
+
+	INPUT: 16 : ( )		mov	ebp,	esp	;nouvelle valeur de ebp
+	REF: 16 : ( 17 )		mov	ebp,	esp	;nouvelle valeur de ebp
+
+	INPUT: 17 : ( )		sub	esp,	0	;allocation des variables locales
+	REF: 17 : ( 18 )		sub	esp,	0	;allocation des variables locales
+
+	INPUT: 18 : ( )		sub	esp,	4	;Call
+	REF: 18 : ( 19 )		sub	esp,	4	;allocation mémoire pour la valeur de retour
+
+	INPUT: 19 : ( )		call	procedure	;
+	REF: 19 : ( 4 )		call	procedure	;
+
+	INPUT: 20 : ( )		pop	r1	;
+	REF: 20 : ( 21 )		pop	r1	;récupération de la valeur de retour
+
+	INPUT: 21 : ( )		mov	eax,	r1	;Write
+	REF: 21 : ( 22 )		mov	eax,	r1	;Write 1
+
+	INPUT: 22 : ( )		call	iprintLF	;
+	REF: 22 : ( )		call	iprintLF	;Write 2
+
+	INPUT: 23 : ( )		add	esp,	0	;désallocation des variables locales
+	REF: 23 : ( 24 )		add	esp,	0	;désallocation des variables locales
+
+	INPUT: 24 : ( )		pop	ebp	;restaure la valeur de ebp
+	REF: 24 : ( 25 )		pop	ebp	;restaure la valeur de ebp
+
+nb error in file: 25
+------------------------------------------------------------------------------------------------------------
+
+
+#############	varloc1.fgs	###################################
+	INPUT: iter num = 0
+	REF: iter num = 3
+
+	INPUT: use = () def = (3 )	in = ()	 	out = ()	 		mov	ebx,	0	;valeur de retour du programme
+	REF: use = () def = (2 )	in = ()	 	out = ()	 		mov	ebx,	0	; valeur de retour du programme
+
+	INPUT: use = () def = (2 )	in = ()	 	out = ()	 		mov	eax,	1	;
+	REF: use = () def = (3 )	in = ()	 	out = ()	 		mov	eax,	1	;
+
+	INPUT: use = () def = (0 )	in = ()	 	out = ()	 		mov	r0,	dword [ebp-4*1]	;
+	REF: use = () def = (0 )	in = ()	 	out = (0 )	 		mov	r0,	dword [ebp-4*1]	;
+
+	INPUT: use = (0 ) def = (0 )	in = (0 )	 	out = ()	 		add	r0,	dword [ebp-4*2]	;
+	REF: use = (0 ) def = (0 )	in = (0 )	 	out = (0 )	 		add	r0,	dword [ebp-4*2]	;
+
+	INPUT: use = (0 ) def = ()	in = (0 )	 	out = ()	 		mov	dword [ebp+4*2],	r0	;Return
+	REF: use = (0 ) def = ()	in = (0 )	 	out = ()	 		mov	dword [ebp+4*2],	r0	;ecriture de la valeur de retour
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	4	;Call
+	REF: use = () def = ()	in = ()	 	out = ()	 		sub	esp,	4	;allocation mémoire pour la valeur de retour
+
+	INPUT: use = () def = (1 )	in = ()	 	out = ()	 		pop	r1	;
+	REF: use = () def = (1 )	in = ()	 	out = (1 )	 		pop	r1	;récupération de la valeur de retour
+
+	INPUT: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write
+	REF: use = (1 ) def = (4 )	in = (1 )	 	out = ()	 		mov	eax,	r1	;Write 1
+
+	INPUT: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;
+	REF: use = () def = ()	in = ()	 	out = ()	 		call	iprintLF	;Write 2
+
+nb error in file: 10
+------------------------------------------------------------------------------------------------------------
+
+
 #############	varloc1.pre-nasm	###################################
 nb error in file: 0
 ------------------------------------------------------------------------------------------------------------
@@ -842,5 +3519,5 @@ nb error in file: 0
 
 #######################################################################################
 ############################# RESULTS #################################################
-===>	Total errors found during comparison: 0
+===>	Total errors found during comparison: 799
 #######################################################################################
